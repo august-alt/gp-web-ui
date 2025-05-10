@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export function TemplateFilterDialog() {
+export function TemplateFilterDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   const [configuredFilter, setConfiguredFilter] = useState("Any")
   const [showKeywordFilters, setShowKeywordFilters] = useState(false)
   const [keywordMatchType, setKeywordMatchType] = useState("Match any word")
@@ -19,7 +19,7 @@ export function TemplateFilterDialog() {
   const [commentChecked, setCommentChecked] = useState(false)
 
   return (
-    <Dialog open>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Template Filters</DialogTitle>

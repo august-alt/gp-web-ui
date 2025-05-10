@@ -4,9 +4,11 @@ import { Input } from "@/components/ui/input"
 import { useState } from "react"
 
 import { AdministrativeTemplatesWidget } from "@/components/dashboard/AdministrativeTemplatesWidget"
+import { TemplateFilterDialog } from "@/components/dashboard/TemplateFilterDialog"
 
 export default function App() {
   const [searchTerm, setSearchTerm] = useState("")
+  const [isTemplateFilterDialogOpen, setIsTemplateFilterDialogOpen] = useState(false)
   
   return (
     <div className="h-screen flex flex-col">
@@ -26,7 +28,7 @@ export default function App() {
           <MenubarContent>
             <MenubarItem>Language</MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>Options</MenubarItem>
+            <MenubarItem onClick={() => setIsTemplateFilterDialogOpen(true)}>Options</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
         
@@ -58,6 +60,7 @@ export default function App() {
         </ResizablePanel>
       </ResizablePanelGroup>
 
+      <TemplateFilterDialog open={isTemplateFilterDialogOpen} onOpenChange={setIsTemplateFilterDialogOpen} />
       {/* Status Bar */}
       <div className="border-t p-2 text-sm text-muted-foreground">
         Ready
