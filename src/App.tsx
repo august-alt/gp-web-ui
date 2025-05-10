@@ -1,0 +1,67 @@
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "@/components/ui/menubar"
+import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
+import { Input } from "@/components/ui/input"
+import { useState } from "react"
+
+import { AdministrativeTemplatesWidget } from "@/components/dashboard/AdministrativeTemplatesWidget"
+
+export default function App() {
+  const [searchTerm, setSearchTerm] = useState("")
+  
+  return (
+    <div className="h-screen flex flex-col">
+      {/* Menu Bar */}
+      <Menubar className="border-b">
+        <MenubarMenu>
+          <MenubarTrigger>File</MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem>Open Policy Directory <span className="ml-2 text-xs text-muted-foreground">(Ctrl+O)</span></MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem>Exit <span className="ml-2 text-xs text-muted-foreground">(Ctrl+Q)</span></MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+        
+        <MenubarMenu>
+          <MenubarTrigger>View</MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem>Language</MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem>Options</MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+        
+        <MenubarMenu>
+          <MenubarTrigger>Help</MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem>Manual</MenubarItem>
+            <MenubarItem>About</MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+      </Menubar>
+
+      {/* Main Content */}
+      <ResizablePanelGroup direction="horizontal" className="flex-1">
+        <ResizablePanel defaultSize={20} minSize={15}>
+          <div className="p-2 space-y-2">
+            <Input 
+              placeholder="Search..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full"
+            />
+            <div className="border rounded-md h-[calc(100vh-4rem)] overflow-auto">
+            </div>
+          </div>
+        </ResizablePanel>
+        <ResizablePanel defaultSize={80}>
+          <AdministrativeTemplatesWidget></AdministrativeTemplatesWidget>
+        </ResizablePanel>
+      </ResizablePanelGroup>
+
+      {/* Status Bar */}
+      <div className="border-t p-2 text-sm text-muted-foreground">
+        Ready
+      </div>
+    </div>
+  )
+}
