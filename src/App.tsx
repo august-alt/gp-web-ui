@@ -7,6 +7,50 @@ import { AdministrativeTemplatesWidget } from "@/components/dashboard/Administra
 import { TemplateFilterDialog } from "@/components/dashboard/TemplateFilterDialog"
 import { AboutDialog } from "@/components/dashboard/AboutDialog"
 
+import TreeView from "@/components/ui/tree-view"
+
+const data = [
+  {
+    id: "1",
+    name: "[Local Group Policy]",
+    type: "folder",
+    children: [
+      {
+        id: "1.1",
+        name: "Machine",
+        type: "folder",
+        children: [
+          {
+            id: "1.1.1",
+            name: "Administrative Templates",
+            type: "department",
+            children: [
+              { id: "1.1.1.1", name: "Test Template 1", type: "item" },
+              { id: "1.1.1.2", name: "Test Template 2", type: "item" },
+            ],
+          },
+        ],
+      },
+      {
+        id: "1.2",
+        name: "User",
+        type: "folder",
+        children: [
+          {
+            id: "1.2.1",
+            name: "Administrative Templates",
+            type: "department",
+            children: [
+              { id: "1.2.1.2", name: "Test Template 2", type: "item" },
+              { id: "1.2.1.1", name: "Test Template 1", type: "item" },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+];
+
 export default function App() {
   const [searchTerm, setSearchTerm] = useState("")
   const [isTemplateFilterDialogOpen, setIsTemplateFilterDialogOpen] = useState(false)
@@ -54,6 +98,12 @@ export default function App() {
               className="w-full"
             />
             <div className="border rounded-md h-[calc(100vh-4rem)] overflow-auto">
+            <TreeView
+              data={data}
+              title="Group Policies"
+              showCheckboxes={false}
+              showExpandAll={false}
+            />
             </div>
           </div>
         </ResizablePanel>
