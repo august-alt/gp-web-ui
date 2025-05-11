@@ -20,7 +20,7 @@ export function TemplateFilterDialog({ open, onOpenChange }: { open: boolean; on
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-fit max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Template Filters</DialogTitle>
         </DialogHeader>
@@ -43,7 +43,7 @@ export function TemplateFilterDialog({ open, onOpenChange }: { open: boolean; on
                   value={configuredFilter} 
                   onValueChange={setConfiguredFilter}
                 >
-                  <SelectTrigger id="configured" className="w-[100px]">
+                  <SelectTrigger id="configured" className="w-[180px]">
                     <SelectValue placeholder="Any" />
                   </SelectTrigger>
                   <SelectContent>
@@ -78,11 +78,11 @@ export function TemplateFilterDialog({ open, onOpenChange }: { open: boolean; on
                       value={keywordText} 
                       onChange={(e) => setKeywordText(e.target.value)}
                     />
-                    <Select 
+                    <Select
                       value={keywordMatchType} 
                       onValueChange={setKeywordMatchType}
                     >
-                      <SelectTrigger className="w-[150px]">
+                      <SelectTrigger className="w-[280px]">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -160,7 +160,7 @@ export function TemplateFilterDialog({ open, onOpenChange }: { open: boolean; on
                       <Button variant="outline" size="sm">Select All</Button>
                       <Button variant="outline" size="sm">Clear All</Button>
                     </div>
-                    <div className="border rounded-md p-4 min-h-[100px]">
+                    <div className="border rounded-md p-4 min-h-[50px]">
                       {/* Platform Tree View would go here */}
                       <p className="text-sm text-muted-foreground">Platform/Application Tree View</p>
                     </div>
