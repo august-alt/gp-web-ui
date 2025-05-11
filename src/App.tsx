@@ -1,61 +1,49 @@
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "@/components/ui/menubar"
 import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { AdministrativeTemplatesWidget } from "@/components/dashboard/AdministrativeTemplatesWidget"
 import { TemplateFilterDialog } from "@/components/dashboard/TemplateFilterDialog"
 import { AboutDialog } from "@/components/dashboard/AboutDialog"
 
-import { TreeView } from "@/components/ui/tree-view"
-
-const data = [
-  {
-    id: "1",
-    name: "[Local Group Policy]",
-    type: "folder",
-    children: [
-      {
-        id: "1.1",
-        name: "Machine",
-        type: "folder",
-        children: [
-          {
-            id: "1.1.1",
-            name: "Administrative Templates",
-            type: "department",
-            children: [
-              { id: "1.1.1.1", name: "Test Template 1", type: "item" },
-              { id: "1.1.1.2", name: "Test Template 2", type: "item" },
-            ],
-          },
-        ],
-      },
-      {
-        id: "1.2",
-        name: "User",
-        type: "folder",
-        children: [
-          {
-            id: "1.2.1",
-            name: "Administrative Templates",
-            type: "department",
-            children: [
-              { id: "1.2.1.2", name: "Test Template 2", type: "item" },
-              { id: "1.2.1.1", name: "Test Template 1", type: "item" },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-];
+import { TreeView, type TreeDataItem } from "@/components/ui/tree-view"
 
 export default function App() {
   const [searchTerm, setSearchTerm] = useState("")
   const [isTemplateFilterDialogOpen, setIsTemplateFilterDialogOpen] = useState(false)
   const [isAboutDialogOpen, setIsAboutDialogOpen] = useState(false)
-  
+
+  const [treeData, setTreeData] = useState<TreeDataItem[]>([])
+
+  useEffect(() => {
+    const fetchPolicies = async () => {
+      try {
+        const response = await fetch("http://localhost:5173/api", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ jsonrpc: "2.0", method: "getPolicies", params: [], id: 1 })
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch policies");
+
+        const result = await response.json();
+
+        const transformNode = (node: any): TreeDataItem => ({
+          id: self.crypto.randomUUID(),
+          name: node.label,
+          children: node.children ? node.children.map(transformNode) : undefined
+        });
+
+        setTreeData([transformNode(result.result)]);
+      } catch (error) {
+        console.error("Policy fetch error:", error);
+      }
+    };
+
+    fetchPolicies();
+  }, []);
+
   return (
     <div className="h-screen flex flex-col">
       {/* Menu Bar */}
@@ -99,7 +87,7 @@ export default function App() {
             />
             <div className="border rounded-md h-[calc(100vh-4rem)] overflow-auto">
             <TreeView
-              data={data}
+              data={treeData}
               title="Group Policies"
             />
             </div>
