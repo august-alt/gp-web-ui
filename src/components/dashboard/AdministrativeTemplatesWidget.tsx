@@ -8,7 +8,7 @@ export function AdministrativeTemplatesWidget() {
   return (
     <div className="flex flex-col h-full">
       {/* Policy Name Frame */}
-      <div className="h-12 border rounded-sm p-2 mb-2">
+      <div className="h-9 border rounded-sm p-2 mb-2 mt-2 mr-2">
         <Label className="text-sm font-medium text-gray-700 dark:text-gray-300">
           Policy Name
         </Label>
