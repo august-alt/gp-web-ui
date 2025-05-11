@@ -7,7 +7,7 @@ import { AdministrativeTemplatesWidget } from "@/components/dashboard/Administra
 import { TemplateFilterDialog } from "@/components/dashboard/TemplateFilterDialog"
 import { AboutDialog } from "@/components/dashboard/AboutDialog"
 
-import TreeView from "@/components/ui/tree-view"
+import { TreeView } from "@/components/ui/tree-view"
 
 const data = [
   {
@@ -101,8 +101,6 @@ export default function App() {
             <TreeView
               data={data}
               title="Group Policies"
-              showCheckboxes={false}
-              showExpandAll={false}
             />
             </div>
           </div>
