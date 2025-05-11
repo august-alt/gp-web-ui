@@ -5,10 +5,12 @@ import { useState } from "react"
 
 import { AdministrativeTemplatesWidget } from "@/components/dashboard/AdministrativeTemplatesWidget"
 import { TemplateFilterDialog } from "@/components/dashboard/TemplateFilterDialog"
+import { AboutDialog } from "@/components/dashboard/AboutDialog"
 
 export default function App() {
   const [searchTerm, setSearchTerm] = useState("")
   const [isTemplateFilterDialogOpen, setIsTemplateFilterDialogOpen] = useState(false)
+  const [isAboutDialogOpen, setIsAboutDialogOpen] = useState(false)
   
   return (
     <div className="h-screen flex flex-col">
@@ -36,7 +38,7 @@ export default function App() {
           <MenubarTrigger>Help</MenubarTrigger>
           <MenubarContent>
             <MenubarItem>Manual</MenubarItem>
-            <MenubarItem>About</MenubarItem>
+            <MenubarItem onClick={() => setIsAboutDialogOpen(true)}>About</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
@@ -61,6 +63,7 @@ export default function App() {
       </ResizablePanelGroup>
 
       <TemplateFilterDialog open={isTemplateFilterDialogOpen} onOpenChange={setIsTemplateFilterDialogOpen} />
+      <AboutDialog open={isAboutDialogOpen} onOpenChange={() => setIsAboutDialogOpen(false)} />
       {/* Status Bar */}
       <div className="border-t p-2 text-sm text-muted-foreground">
         Ready

@@ -1,9 +1,9 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 
-export function AboutDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function AboutDialog({ open, onOpenChange }: { open: boolean; onOpenChange: () => void }) {
   return (
-    <Dialog open={open} onOpenChange={onClose}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[432px]">
         <DialogHeader>
           <DialogTitle className="text-2xl text-center">GPUI</DialogTitle>
@@ -13,7 +13,7 @@ export function AboutDialog({ open, onClose }: { open: boolean; onClose: () => v
           <div>Version </div>
         </DialogDescription>
         <DialogFooter>
-          <Button onClick={onClose}>OK</Button>
+          <Button onClick={onOpenChange}>OK</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
