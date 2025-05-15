@@ -4,13 +4,21 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 
-export function AdministrativeTemplatesWidget() {
+export function AdministrativeTemplatesWidget({
+  help = '',
+  policyName = '',
+  supportedOn = '',
+}: {
+  help?: string
+  policyName?: string
+  supportedOn?: string
+}) {
   return (
     <div className="flex flex-col h-full">
       {/* Policy Name Frame */}
       <div className="h-9 border rounded-sm p-2 mb-2 mt-2 mr-2">
         <Label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-          Policy Name
+          Policy Name: {policyName}
         </Label>
       </div>
 
@@ -52,7 +60,8 @@ export function AdministrativeTemplatesWidget() {
               <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Supported on:
               </Label>
-              <Textarea 
+              <Textarea
+                value={supportedOn}
                 readOnly 
                 className="min-h-[78px] border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
               />
@@ -72,7 +81,8 @@ export function AdministrativeTemplatesWidget() {
               <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Help:
               </Label>
-              <Textarea 
+              <Textarea
+                value={help}
                 readOnly 
                 className="min-h-[78px] border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
               />
