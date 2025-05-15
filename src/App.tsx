@@ -9,13 +9,18 @@ import { AboutDialog } from "@/components/dashboard/AboutDialog"
 
 import { TreeView, type TreeDataItem } from "@/components/ui/tree-view"
 
+interface GroupPolicyItem {
+  help?: string
+  supportedOn?: string
+};
+
 export default function App() {
   const [searchTerm, setSearchTerm] = useState("")
   const [isTemplateFilterDialogOpen, setIsTemplateFilterDialogOpen] = useState(false)
   const [isAboutDialogOpen, setIsAboutDialogOpen] = useState(false)
 
   const [treeData, setTreeData] = useState<TreeDataItem[]>([])
-  const [selectedNode, setSelectedNode] = useState<TreeDataItem | null>(null)
+  const [selectedNode, setSelectedNode] = useState<TreeDataItem & GroupPolicyItem | null>(null)
 
   useEffect(() => {
     const fetchPolicies = async () => {
