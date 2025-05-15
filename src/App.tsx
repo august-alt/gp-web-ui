@@ -21,21 +21,15 @@ export default function App() {
       try {
         const response = await fetch("http://localhost:5173/api", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ jsonrpc: "2.0", method: "getPolicies", params: [], id: 1 })
+          headers: { "Content-Type": "application/json", "Accept": "application/json" } ,
+          body: JSON.stringify({ jsonrpc: "2.0", method: "gpservice.basealt.ru.getGroupPolicies", params: [], id: 1 })
         });
 
         if (!response.ok) throw new Error("Failed to fetch policies");
 
         const result = await response.json();
 
-        const transformNode = (node: any): TreeDataItem => ({
-          id: self.crypto.randomUUID(),
-          name: node.label,
-          children: node.children ? node.children.map(transformNode) : undefined
-        });
-
-        setTreeData([transformNode(result.result)]);
+        setTreeData([result.result]);
       } catch (error) {
         console.error("Policy fetch error:", error);
       }
