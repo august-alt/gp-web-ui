@@ -15,6 +15,7 @@ export default function App() {
   const [isAboutDialogOpen, setIsAboutDialogOpen] = useState(false)
 
   const [treeData, setTreeData] = useState<TreeDataItem[]>([])
+  const [selectedNode, setSelectedNode] = useState<TreeDataItem | null>(null)
 
   useEffect(() => {
     const fetchPolicies = async () => {
@@ -83,12 +84,17 @@ export default function App() {
             <TreeView
               data={treeData}
               title="Group Policies"
+              onSelectChange={(item) => setSelectedNode(item || null)}
             />
             </div>
           </div>
         </ResizablePanel>
         <ResizablePanel defaultSize={80}>
-          <AdministrativeTemplatesWidget></AdministrativeTemplatesWidget>
+          <AdministrativeTemplatesWidget
+            help={selectedNode?.help || ''}
+            policyName={selectedNode?.name || ''}
+            supportedOn={selectedNode?.supportedOn || ''}
+          />
         </ResizablePanel>
       </ResizablePanelGroup>
 
