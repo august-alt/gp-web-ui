@@ -1,5 +1,5 @@
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "@/components/ui/menubar"
-import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
+import { ResizablePanel, ResizablePanelGroup, ResizableHandle } from "@/components/ui/resizable"
 import { Input } from "@/components/ui/input"
 import { useState, useEffect } from "react"
 
@@ -125,8 +125,9 @@ export default function App() {
             />
             </div>
           </div>
-        </ResizablePanel>
-        <ResizablePanel defaultSize={80}>
+      </ResizablePanel>
+      <ResizableHandle className="right-1"/>
+      <ResizablePanel defaultSize={80}>
           <AdministrativeTemplatesWidget
             help={selectedNode?.help || ''}
             policyName={selectedNode?.name || ''}
