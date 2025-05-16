@@ -172,8 +172,8 @@ export function TemplateFilterDialog({ open, onOpenChange }: { open: boolean; on
 
           {/* Action Buttons */}
           <div className="flex justify-end space-x-2">
-            <Button variant="outline">Cancel</Button>
-            <Button>OK</Button>
+            <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
+            <Button onClick={() => onOpenChange(false)}>OK</Button>
           </div>
         </div>
       </DialogContent>
