@@ -36,3 +36,7 @@ export function DecimalTextBox({
     </div>
   );
 }
+
+export type {
+  DecimalTextBoxProps
+}

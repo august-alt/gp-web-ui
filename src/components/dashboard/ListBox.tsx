@@ -15,3 +15,7 @@ export function ListBox({ label }: ListBoxProps) {
     </div>
   )
 }
+
+export type {
+    ListBoxProps
+}

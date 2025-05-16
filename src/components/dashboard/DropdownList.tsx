@@ -36,3 +36,7 @@ export function DropdownList({
     </div>
   )
 }
+
+export type {
+    DropdownListProps
+}

@@ -9,9 +9,12 @@ import { AboutDialog } from "@/components/dashboard/AboutDialog"
 
 import { TreeView, type TreeDataItem } from "@/components/ui/tree-view"
 
+import { type ContentWidgetProps } from "@/components/dashboard/ContentWidget"
+
 interface GroupPolicyItem {
   help?: string
   supportedOnText?: string
+  policyWidget?: ContentWidgetProps
 };
 
 export default function App() {
@@ -99,6 +102,7 @@ export default function App() {
             help={selectedNode?.help || ''}
             policyName={selectedNode?.name || ''}
             supportedOnText={selectedNode?.supportedOnText || ''}
+            presentation={selectedNode?.policyWidget || { widgets: [] }}
           />
         </ResizablePanel>
       </ResizablePanelGroup>

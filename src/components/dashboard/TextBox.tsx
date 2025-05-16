@@ -20,3 +20,7 @@ export const TextBox = ({ refId, label, defaultValue }: TextBoxProps) => {
     </div>
   );
 };
+
+export type {
+  TextBoxProps
+}

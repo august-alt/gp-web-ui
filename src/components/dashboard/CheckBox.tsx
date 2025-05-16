@@ -6,11 +6,15 @@ interface CheckBoxProps {
   label: string;
 }
 
-export default function CheckBox({ defaultChecked = false, label }: CheckBoxProps) {
+export function CheckBox({ defaultChecked = false, label }: CheckBoxProps) {
   return (
     <div className="flex items-center space-x-2">
       <Checkbox defaultChecked={defaultChecked} />
       <Label htmlFor="terms">{label}</Label>
     </div>
   )
+}
+
+export type {
+  CheckBoxProps
 }

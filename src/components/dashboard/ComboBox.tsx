@@ -29,3 +29,7 @@ export function ComboBox({ refId, label, defaultValue, suggestions }: ComboBoxPr
     </div>
   );
 }
+
+export type {
+  ComboBoxProps
+}

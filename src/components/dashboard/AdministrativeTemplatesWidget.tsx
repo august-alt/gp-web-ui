@@ -4,14 +4,18 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 
+import { ContentWidget, type ContentWidgetProps } from "./ContentWidget"
+
 export function AdministrativeTemplatesWidget({
   help = '',
   policyName = '',
   supportedOnText = '',
+  presentation = { widgets: [] },
 }: {
   help?: string
   policyName?: string
   supportedOnText?: string
+  presentation?: ContentWidgetProps
 }) {
   return (
     <div className="flex flex-col h-full">
@@ -48,7 +52,7 @@ export function AdministrativeTemplatesWidget({
 
           <ScrollArea className="mt-2 border rounded-sm h-64">
             <div className="p-2">
-              {/* Content area for scrollable content */}
+              <ContentWidget widgets={presentation.widgets || []}></ContentWidget>
             </div>
           </ScrollArea>
         </div>

@@ -45,3 +45,7 @@ export const LongDecimalTextBox: React.FC<LongDecimalTextBoxProps> = ({
     </div>
   );
 };
+
+export type {
+  LongDecimalTextBoxProps
+}
