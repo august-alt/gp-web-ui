@@ -11,11 +11,16 @@ import { TreeView, type TreeDataItem } from "@/components/ui/tree-view"
 
 import { type ContentWidgetProps } from "@/components/dashboard/ContentWidget"
 
+import { Folder, FolderInput, File } from 'lucide-react';
+
 interface GroupPolicyItem {
+  type: number
   help?: string
   supportedOnText?: string
   policyWidget?: ContentWidgetProps
 };
+
+type Item = TreeDataItem & GroupPolicyItem;
 
 export default function App() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -23,7 +28,7 @@ export default function App() {
   const [isAboutDialogOpen, setIsAboutDialogOpen] = useState(false)
 
   const [treeData, setTreeData] = useState<TreeDataItem[]>([])
-  const [selectedNode, setSelectedNode] = useState<TreeDataItem & GroupPolicyItem | null>(null)
+  const [selectedNode, setSelectedNode] = useState<Item | null>(null)
 
   useEffect(() => {
     const fetchPolicies = async () => {
@@ -38,7 +43,28 @@ export default function App() {
 
         const result = await response.json();
 
-        setTreeData([result.result]);
+        // Process tree data to assign icons based on type
+        const getIconByType = (type: number) => {
+          if (type === 0) return Folder;
+          if (type === 1) return File;
+          return null;
+        };
+
+        const getOpenIconByType = (type: number) => {
+          if (type === 0) return FolderInput;
+          return null;
+        };
+        
+        const processTreeData = (data: Item[]): Item[] => {
+          return data.map(item => ({
+            ...item,
+            icon: getIconByType(item.type),
+            openIcon: getOpenIconByType(item.type),
+            children: item.children ? processTreeData(item.children as Item[]) : undefined
+          }));
+        };
+        
+        setTreeData(processTreeData([result.result]));
       } catch (error) {
         console.error("Policy fetch error:", error);
       }
@@ -92,7 +118,7 @@ export default function App() {
             <TreeView
               data={treeData}
               title="Group Policies"
-              onSelectChange={(item) => setSelectedNode(item || null)}
+              onSelectChange={(item) => setSelectedNode(item as Item || null)}
             />
             </div>
           </div>
