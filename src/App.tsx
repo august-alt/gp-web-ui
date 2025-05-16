@@ -11,7 +11,7 @@ import { TreeView, type TreeDataItem } from "@/components/ui/tree-view"
 
 import { type ContentWidgetProps } from "@/components/dashboard/ContentWidget"
 
-import { Folder, FolderInput, File } from 'lucide-react';
+import { Folder, FolderInput, File, Search } from 'lucide-react';
 
 interface GroupPolicyItem {
   type: number
@@ -108,12 +108,15 @@ export default function App() {
       <ResizablePanelGroup direction="horizontal" className="flex-1">
         <ResizablePanel defaultSize={20} minSize={15}>
           <div className="p-2 space-y-2">
-            <Input 
-              placeholder="Search..." 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full"
-            />
+            <div className="relative">
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-8"
+              />
+            </div>
             <div className="border rounded-md h-[calc(100vh-4rem)] overflow-auto">
             <TreeView
               data={treeData}
