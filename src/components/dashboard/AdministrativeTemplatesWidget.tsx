@@ -7,11 +7,11 @@ import { Textarea } from "@/components/ui/textarea"
 export function AdministrativeTemplatesWidget({
   help = '',
   policyName = '',
-  supportedOn = '',
+  supportedOnText = '',
 }: {
   help?: string
   policyName?: string
-  supportedOn?: string
+  supportedOnText?: string
 }) {
   return (
     <div className="flex flex-col h-full">
@@ -61,7 +61,7 @@ export function AdministrativeTemplatesWidget({
                 Supported on:
               </Label>
               <Textarea
-                value={supportedOn}
+                value={supportedOnText}
                 readOnly 
                 className="min-h-[78px] border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
               />

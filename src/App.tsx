@@ -11,7 +11,7 @@ import { TreeView, type TreeDataItem } from "@/components/ui/tree-view"
 
 interface GroupPolicyItem {
   help?: string
-  supportedOn?: string
+  supportedOnText?: string
 };
 
 export default function App() {
@@ -98,7 +98,7 @@ export default function App() {
           <AdministrativeTemplatesWidget
             help={selectedNode?.help || ''}
             policyName={selectedNode?.name || ''}
-            supportedOn={selectedNode?.supportedOn || ''}
+            supportedOnText={selectedNode?.supportedOnText || ''}
           />
         </ResizablePanel>
       </ResizablePanelGroup>
