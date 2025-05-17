@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import { AdministrativeTemplatesWidget } from "@/components/dashboard/AdministrativeTemplatesWidget"
 import { TemplateFilterDialog } from "@/components/dashboard/TemplateFilterDialog"
 import { AboutDialog } from "@/components/dashboard/AboutDialog"
+import { ServerErrorDialog } from "@/components/dashboard/ServerErrorDialog"
 
 import { TreeView, type TreeDataItem } from "@/components/ui/tree-view"
 
@@ -26,6 +27,7 @@ export default function App() {
   const [searchTerm, setSearchTerm] = useState("")
   const [isTemplateFilterDialogOpen, setIsTemplateFilterDialogOpen] = useState(false)
   const [isAboutDialogOpen, setIsAboutDialogOpen] = useState(false)
+  const [isServerErrorDialogOpen, setIsServerErrorDialogOpen] = useState(false)
 
   const [treeData, setTreeData] = useState<TreeDataItem[]>([])
   const [selectedNode, setSelectedNode] = useState<Item | null>(null)
@@ -67,6 +69,7 @@ export default function App() {
         setTreeData(processTreeData([result.result]));
       } catch (error) {
         console.error("Policy fetch error:", error);
+        setIsServerErrorDialogOpen(true);
       }
     };
 
@@ -139,6 +142,7 @@ export default function App() {
 
       <TemplateFilterDialog open={isTemplateFilterDialogOpen} onOpenChange={setIsTemplateFilterDialogOpen} />
       <AboutDialog open={isAboutDialogOpen} onOpenChange={() => setIsAboutDialogOpen(false)} />
+      <ServerErrorDialog open={isServerErrorDialogOpen} onOpenChange={() => setIsServerErrorDialogOpen(false)} />
       {/* Status Bar */}
       <div className="border-t p-2 text-sm text-muted-foreground">
         Ready
