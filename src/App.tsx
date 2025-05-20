@@ -29,8 +29,18 @@ export default function App() {
   const [isAboutDialogOpen, setIsAboutDialogOpen] = useState(false)
   const [isServerErrorDialogOpen, setIsServerErrorDialogOpen] = useState(false)
 
-  const [treeData, setTreeData] = useState<TreeDataItem[]>([])
+  const [originalData, setOriginalData] = useState<Item[]>([])
+  const [filteredData, setFilteredData] = useState<Item[]>([])
   const [selectedNode, setSelectedNode] = useState<Item | null>(null)
+
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      setFilteredData(originalData);
+      return;
+    }
+    const newFilteredData = filterTreeData(originalData, searchTerm);
+    setFilteredData(newFilteredData);
+  }, [searchTerm, originalData]);
 
   useEffect(() => {
     const fetchPolicies = async () => {
@@ -56,7 +66,7 @@ export default function App() {
           if (type === 0) return FolderInput;
           return null;
         };
-        
+
         const processTreeData = (data: Item[]): Item[] => {
           return data.map(item => ({
             ...item,
@@ -65,8 +75,8 @@ export default function App() {
             children: item.children ? processTreeData(item.children as Item[]) : undefined
           }));
         };
-        
-        setTreeData(processTreeData([result.result]));
+
+        setOriginalData(processTreeData(result.result as Item[]));
       } catch (error) {
         console.error("Policy fetch error:", error);
         setIsServerErrorDialogOpen(true);
@@ -75,6 +85,24 @@ export default function App() {
 
     fetchPolicies();
   }, []);
+
+  const filterTreeData = (data: Item[], searchTerm: string): Item[] => {
+    return data
+      .map(item => {
+        const matches = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+        const children = item.children
+          ? filterTreeData(item.children as Item[], searchTerm)
+          : [];
+        if (matches || children.length > 0) {
+          return {
+            ...item,
+            children: children.length > 0 ? children : undefined
+          };
+        }
+        return null;
+      })
+      .filter(item => item !== null);
+  };
 
   return (
     <div className="h-screen flex flex-col">
@@ -88,7 +116,7 @@ export default function App() {
             <MenubarItem>Exit <span className="ml-2 text-xs text-muted-foreground">(Ctrl+Q)</span></MenubarItem>
           </MenubarContent>
         </MenubarMenu>
-        
+
         <MenubarMenu>
           <MenubarTrigger>View</MenubarTrigger>
           <MenubarContent>
@@ -97,7 +125,7 @@ export default function App() {
             <MenubarItem onClick={() => setIsTemplateFilterDialogOpen(true)}>Options</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
-        
+
         <MenubarMenu>
           <MenubarTrigger>Help</MenubarTrigger>
           <MenubarContent>
@@ -122,7 +150,7 @@ export default function App() {
             </div>
             <div className="border rounded-md h-[calc(100vh-4rem)] overflow-auto">
             <TreeView
-              data={treeData}
+              data={filteredData}
               title="Group Policies"
               onSelectChange={(item) => setSelectedNode(item as Item || null)}
             />
