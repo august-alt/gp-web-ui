@@ -14,45 +14,47 @@ interface ListBoxItem {
 }
 
 export function ListBox({ label, onSave, items = null }: ListBoxProps) {
-  const [childrenList, setChildrenList] = useState<ListBoxItem[]>(items || [])
-  const [newChildName, setNewChildName] = useState("")
+  const [isOpen, setIsOpen] = useState(false);
+  const [itemList, setItemList] = useState<ListBoxItem[]>(items || [])
+  const [newItemName, setNewItemName] = useState("")
 
   const addChild = () => {
-    if (newChildName.trim()) {
-      setChildrenList([...childrenList, { name: newChildName.trim() }])
-      setNewChildName("")
+    if (newItemName.trim()) {
+      setItemList([...itemList, { name: newItemName.trim() }])
+      setNewItemName("")
     }
   }
 
   const removeChild = (index: number) => {
-    const newList = childrenList.filter((_, i) => i !== index)
-    setChildrenList(newList)
+    const newList = itemList.filter((_, i) => i !== index)
+    setItemList(newList)
   }
 
   return (
     <div>
       <Label className="block font-medium mb-2">{label}</Label>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button className="p-2 border rounded">
-            {label || 'Open ListBox Dialog'}
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+<Dialog open={isOpen} onOpenChange={setIsOpen}>
+  <DialogTrigger asChild>
+    <Button className="p-2 border rounded">
+      {label || 'Open ListBox Dialog'}
+    </Button>
+  </DialogTrigger>
+  <DialogContent className="sm:max-w-[425px]">
           <div className="grid gap-4 py-4">
             {label && <Label>{label}</Label>}
             <div className="space-y-4">
               <div className="flex gap-2">
                 <input
                   type="text"
-                  value={newChildName}
-                  onChange={(e) => setNewChildName(e.target.value)}
-                  placeholder="Child name"
-                  className="flex-1 p-2 border rounded"
+                  value={newItemName}
+                  onChange={(e) => setNewItemName(e.target.value)}
+                  placeholder="name"
+                  className="flex-1 h-[37px] p-2 border rounded"
                 />
                 <Button
                   onClick={addChild}
-                  className="p-2 bg-blue-500 text-white rounded"
+                  className="p-2 border rounded"
+                  variant="secondary"
                 >
                   Add
                 </Button>
@@ -68,14 +70,14 @@ export function ListBox({ label, onSave, items = null }: ListBoxProps) {
                     </tr>
                   </thead>
                   <tbody>
-                    {childrenList.map((child, index) => (
+                    {itemList.map((child, index) => (
                       <tr key={index} className="border-b">
                         <td className="p-2">{index}</td>
                         <td className="p-2">{child.name}</td>
                         <td className="p-2">
                           <Button
                             onClick={() => removeChild(index)}
-                            className="text-red-500 hover:text-red-700"
+                            variant="destructive"
                           >
                             Remove
                           </Button>
@@ -85,14 +87,25 @@ export function ListBox({ label, onSave, items = null }: ListBoxProps) {
                   </tbody>
                 </table>
               </div>
-
-              <Button
-                onClick={() => onSave(childrenList)}
-                className="p-2 bg-green-500 text-white rounded w-full"
-              >
-                Save
-              </Button>
             </div>
+          </div>
+          <div className="flex justify-end gap-2 mt-2 mr-2">
+            <Button
+              onClick={() => setIsOpen(false)}
+              variant="outline"
+              className="px-4"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                onSave(itemList);
+                setIsOpen(false);
+              }}
+              className="px-4"
+            >
+              OK
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
