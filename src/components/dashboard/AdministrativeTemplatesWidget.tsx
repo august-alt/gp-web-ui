@@ -66,29 +66,29 @@ export function AdministrativeTemplatesWidget({
               </Label>
               <Textarea
                 value={supportedOnText}
-                readOnly 
+                readOnly
                 className="min-h-[78px] border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
               />
             </div>
-            
+
             <div className="mb-2">
               <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Comment:
               </Label>
-              <Textarea 
-                readOnly 
+              <Textarea
+                readOnly
                 className="min-h-[78px] border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
               />
             </div>
-            
+
             <div className="flex-1">
               <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Help:
               </Label>
               <Textarea
                 value={help}
-                readOnly 
-                className="min-h-[78px] border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                readOnly
+                className="min-h-[210px] border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
               />
             </div>
           </div>
