@@ -1,5 +1,6 @@
-import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectValue, SelectTrigger } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
+import { useState } from "react"
 
 interface DropdownListProps {
   noSort: boolean
@@ -17,13 +18,18 @@ export function DropdownList({
   refId 
 }: DropdownListProps) {
   const sortedValues = noSort ? values : [...values].sort()
+  const [selectedValue, setSelectedValue] = useState(values[Math.min(defaultItem, values.length - 1)])
 
   return (
     <div className="space-y-2">
       <Label htmlFor={refId}>{label}</Label>
-      <Select defaultValue={values[Math.min(defaultItem, values.length - 1)]}>
-        <SelectTrigger id={refId}>
-          {sortedValues[0]}
+      <Select
+        defaultValue={selectedValue}
+        value={selectedValue}
+        onValueChange={setSelectedValue}
+      >
+        <SelectTrigger id={refId} className="w-[340px]">
+            <SelectValue placeholder={selectedValue} />
         </SelectTrigger>
         <SelectContent>
           {sortedValues.map((value, index) => (
