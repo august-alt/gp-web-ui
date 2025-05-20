@@ -6,11 +6,11 @@ export function AboutDialog({ open, onOpenChange }: { open: boolean; onOpenChang
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[432px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl text-center">GPUI</DialogTitle>
+          <DialogTitle className="text-2xl text-center">GP-WEB-UI</DialogTitle>
         </DialogHeader>
         <DialogDescription className="text-center py-4 space-y-2">
-          <div>Copyright (C) 2022 BaseALT Ltd.</div>
-          <div>Version </div>
+          <div>Copyright (C) 2022-2025 BaseALT Ltd.</div>
+          <div>Version 1.0.0</div>
         </DialogDescription>
         <DialogFooter>
           <Button onClick={onOpenChange}>OK</Button>
