@@ -1,3 +1,4 @@
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 
 interface ListBoxProps {
@@ -7,11 +8,23 @@ interface ListBoxProps {
 
 export function ListBox({ label, children = null }: ListBoxProps) {
   return (
-    <div className="p-4 border rounded-lg shadow-sm bg-card text-card-foreground">
+    <div>
       <Label className="block font-medium mb-2">{label}</Label>
-      <div className="space-y-1">
-        {children}
-      </div>
+      <Dialog>
+        <DialogTrigger asChild>
+          <button className="p-2 border rounded">
+            {label || 'Open ListBox Dialog'}
+          </button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <div className="grid gap-4 py-4">
+            {label && <Label>{label}</Label>}
+            <div>
+              {children}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
