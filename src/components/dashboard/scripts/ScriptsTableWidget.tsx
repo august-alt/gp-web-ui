@@ -8,7 +8,7 @@ interface ScriptsTableWidgetProps {
   items?: ScriptItem[];
 }
 
-export default function ScriptsTableWidget({ items = [] }: ScriptsTableWidgetProps) {
+export function ScriptsTableWidget({ items = [] }: ScriptsTableWidgetProps) {
   return (
     <div className="rounded-md border">
       <Table>

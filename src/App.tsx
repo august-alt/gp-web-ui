@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { useState, useEffect } from "react"
 
 import { AdministrativeTemplatesWidget } from "@/components/dashboard/AdministrativeTemplatesWidget"
+import { ScriptsTableWidget } from "@/components/dashboard/scripts/ScriptsTableWidget"
 import { TemplateFilterDialog } from "@/components/dashboard/TemplateFilterDialog"
 import { AboutDialog } from "@/components/dashboard/AboutDialog"
 import { ServerErrorDialog } from "@/components/dashboard/ServerErrorDialog"
@@ -159,12 +160,19 @@ export default function App() {
       </ResizablePanel>
       <ResizableHandle className="right-1"/>
       <ResizablePanel defaultSize={80}>
-          <AdministrativeTemplatesWidget
-            help={selectedNode?.help || ''}
-            policyName={selectedNode?.name || ''}
-            supportedOnText={selectedNode?.supportedOnText || ''}
-            presentation={selectedNode?.policyWidget || { widgets: [] }}
-          />
+          {selectedNode?.id === "{123e4567-e89b-12d3-a456-426652340004}" ? (
+            <ScriptsTableWidget items={[
+              { name: "Startup" },
+              { name: "Shutdown" }
+            ]} />
+          ) : (
+            <AdministrativeTemplatesWidget
+              help={selectedNode?.help || ''}
+              policyName={selectedNode?.name || ''}
+              supportedOnText={selectedNode?.supportedOnText || ''}
+              presentation={selectedNode?.policyWidget || { widgets: [] }}
+            />
+          )}
         </ResizablePanel>
       </ResizablePanelGroup>
 
