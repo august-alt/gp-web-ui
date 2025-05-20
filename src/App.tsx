@@ -160,7 +160,12 @@ export default function App() {
       </ResizablePanel>
       <ResizableHandle className="right-1"/>
       <ResizablePanel defaultSize={80}>
-          {selectedNode?.id === "{123e4567-e89b-12d3-a456-426652340004}" ? (
+          {selectedNode?.id === "{123e4567-e89b-12d3-a456-426652340005}" ? (
+            <ScriptsTableWidget items={[
+              { name: "Logon" },
+              { name: "Logoff" }
+            ]} />
+          ) : selectedNode?.id === "{123e4567-e89b-12d3-a456-426652340004}" ? (
             <ScriptsTableWidget items={[
               { name: "Startup" },
               { name: "Shutdown" }
