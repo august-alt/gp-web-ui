@@ -76,7 +76,7 @@ export default function App() {
           }));
         };
 
-        setOriginalData(processTreeData(result.result as Item[]));
+        setOriginalData(processTreeData([result.result] as Item[]));
       } catch (error) {
         console.error("Policy fetch error:", error);
         setIsServerErrorDialogOpen(true);
