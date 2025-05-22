@@ -24,7 +24,7 @@ export function TemplateFilterDialog({ open, onOpenChange }: { open: boolean; on
         <DialogHeader>
           <DialogTitle>Template Filters</DialogTitle>
         </DialogHeader>
-        
+
         <div className="space-y-6">
           {/* Header Label */}
           <p className="text-sm text-muted-foreground">
@@ -39,8 +39,8 @@ export function TemplateFilterDialog({ open, onOpenChange }: { open: boolean; on
             <CardContent className="space-y-2">
               <div className="flex items-center space-x-2">
                 <Label htmlFor="configured">Configured:</Label>
-                <Select 
-                  value={configuredFilter} 
+                <Select
+                  value={configuredFilter}
                   onValueChange={setConfiguredFilter}
                 >
                   <SelectTrigger id="configured" className="w-[180px]">
@@ -60,9 +60,9 @@ export function TemplateFilterDialog({ open, onOpenChange }: { open: boolean; on
           <Card>
             <CardHeader>
               <div className="flex items-center space-x-2">
-                <Checkbox 
-                  id="keyword" 
-                  checked={showKeywordFilters} 
+                <Checkbox
+                  id="keyword"
+                  checked={showKeywordFilters}
                   onCheckedChange={(checked) => setShowKeywordFilters(!!checked)}
                 />
                 <CardTitle>Enable Keyword Filters</CardTitle>
@@ -73,13 +73,13 @@ export function TemplateFilterDialog({ open, onOpenChange }: { open: boolean; on
                 <div className="space-y-3">
                   <div className="flex items-center space-x-2">
                     <Label htmlFor="keywords">Filter for word(s):</Label>
-                    <Input 
-                      id="keywords" 
-                      value={keywordText} 
+                    <Input
+                      id="keywords"
+                      value={keywordText}
                       onChange={(e) => setKeywordText(e.target.value)}
                     />
                     <Select
-                      value={keywordMatchType} 
+                      value={keywordMatchType}
                       onValueChange={setKeywordMatchType}
                     >
                       <SelectTrigger className="w-[280px]">
@@ -92,28 +92,28 @@ export function TemplateFilterDialog({ open, onOpenChange }: { open: boolean; on
                       </SelectContent>
                     </Select>
                   </div>
-                  
+
                   <div className="flex items-center space-x-4 pl-6">
                     <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="title" 
-                        checked={titleChecked} 
+                      <Checkbox
+                        id="title"
+                        checked={titleChecked}
                         onCheckedChange={(checked) => setTitleChecked(!!checked)}
                       />
                       <Label htmlFor="title">Policy Settings Title</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="help" 
-                        checked={helpChecked} 
+                      <Checkbox
+                        id="help"
+                        checked={helpChecked}
                         onCheckedChange={(checked) => setHelpChecked(!!checked)}
                       />
                       <Label htmlFor="help">Help Text</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="comment" 
-                        checked={commentChecked} 
+                      <Checkbox
+                        id="comment"
+                        checked={commentChecked}
                         onCheckedChange={(checked) => setCommentChecked(!!checked)}
                       />
                       <Label htmlFor="comment">Comment</Label>
@@ -128,9 +128,9 @@ export function TemplateFilterDialog({ open, onOpenChange }: { open: boolean; on
           <Card>
             <CardHeader>
               <div className="flex items-center space-x-2">
-                <Checkbox 
-                  id="platform" 
-                  checked={showPlatformFilters} 
+                <Checkbox
+                  id="platform"
+                  checked={showPlatformFilters}
                   onCheckedChange={(checked) => setShowPlatformFilters(!!checked)}
                 />
                 <CardTitle>Enable Requirements Filters</CardTitle>
@@ -141,11 +141,11 @@ export function TemplateFilterDialog({ open, onOpenChange }: { open: boolean; on
                 <div className="space-y-3">
                   <div className="flex items-center space-x-2">
                     <Label htmlFor="platform-mode">Select the desired platform and application filter(s):</Label>
-                    <Select 
-                      value={platformMatchType} 
+                    <Select
+                      value={platformMatchType}
                       onValueChange={setPlatformMatchType}
                     >
-                      <SelectTrigger id="platform-mode" className="w-[300px]">
+                      <SelectTrigger id="platform-mode" className="w-[440px]">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -154,7 +154,7 @@ export function TemplateFilterDialog({ open, onOpenChange }: { open: boolean; on
                       </SelectContent>
                     </Select>
                   </div>
-                  
+
                   <div className="pl-6 space-y-2">
                     <div className="flex items-center space-x-2">
                       <Button variant="outline" size="sm">Select All</Button>
