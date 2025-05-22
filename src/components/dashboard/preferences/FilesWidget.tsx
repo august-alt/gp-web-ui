@@ -11,7 +11,7 @@ export function FilesWidget() {
     <div className="flex flex-col h-full">
       {/* Action selector */}
       <div className="flex gap-2 mb-4">
-        <div className="w-32">Action:</div>
+        <div className="w-32 flex-1 mt-2">Action:</div>
         <Select defaultValue="create">
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Select action" />
@@ -29,18 +29,21 @@ export function FilesWidget() {
       <Separator className="my-4" />
 
       {/* File paths section */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="col-span-1 text-sm">Source file(s):</div>
-        <Input className="col-span-2" placeholder="Placeholder" />
-        <Button variant="outline" size="icon" className="ml-2">
-          ...
-        </Button>
-
-        <div className="col-span-1 text-sm mt-4">Destination:</div>
-        <Input className="col-span-2 mt-4" placeholder="Placeholder" />
-        <Button variant="outline" size="icon" className="ml-2 mt-4">
-          ...
-        </Button>
+      <div className="grid grid-cols-1 gap-4 mb-6">
+        <div className="flex w-full">
+          <div className="text-sm mt-2 flex-3">Source file(s):</div>
+          <Input className="flex-7" placeholder="Placeholder" />
+          <Button variant="outline" size="icon" className="ml-2">
+            ...
+          </Button>
+        </div>
+        <div className="flex w-full">
+          <div className="text-sm mt-2 flex-3">Destination:</div>
+          <Input className="flex-7" placeholder="Placeholder" />
+          <Button variant="outline" size="icon" className="ml-2">
+            ...
+          </Button>
+        </div>
       </div>
 
       {/* Supress errors checkbox */}
