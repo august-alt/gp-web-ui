@@ -14,12 +14,13 @@ import { VariablesWidget } from "@/components/dashboard/preferences/VariablesWid
 
 interface PreferencesDialogProps {
   preferencesType?: string
+  open?: boolean
 }
 
-export function PreferencesDialog({ preferencesType }: PreferencesDialogProps) {
-  const [isOpen, setIsOpen] = useState(false)
+export function PreferencesDialog({ preferencesType, open = false }: PreferencesDialogProps) {
+  const [isOpen, setIsOpen] = useState(open)
   return (
-    <Dialog open={isOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" onClick={() => { setIsOpen(true) }}>Open Preferences</Button>
       </DialogTrigger>
