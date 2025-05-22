@@ -1,4 +1,5 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { useState } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { CommonWidget } from "@/components/dashboard/preferences/CommonWidget"
@@ -16,10 +17,11 @@ interface PreferencesDialogProps {
 }
 
 export function PreferencesDialog({ preferencesType }: PreferencesDialogProps) {
+  const [isOpen, setIsOpen] = useState(false)
   return (
-    <Dialog>
+    <Dialog open={isOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Open Preferences</Button>
+        <Button variant="outline" onClick={() => { setIsOpen(true) }}>Open Preferences</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
@@ -84,9 +86,9 @@ export function PreferencesDialog({ preferencesType }: PreferencesDialogProps) {
           )}
         </Tabs>
 
-        <div className="flex justify-end space-x-2">
-          <Button variant="outline">Cancel</Button>
-          <Button>OK</Button>
+          <div className="flex justify-end space-x-2">
+          <Button variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
+          <Button onClick={() => setIsOpen(false)}>OK</Button>
         </div>
       </DialogContent>
     </Dialog>
