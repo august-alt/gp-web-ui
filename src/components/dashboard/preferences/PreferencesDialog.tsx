@@ -24,7 +24,7 @@ export function PreferencesDialog({ preferencesType, open = false }: Preferences
       <DialogTrigger asChild>
         <Button variant="outline" onClick={() => { setIsOpen(true) }}>Open Preferences</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[500px] max-h-[92vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Preferences</DialogTitle>
         </DialogHeader>
