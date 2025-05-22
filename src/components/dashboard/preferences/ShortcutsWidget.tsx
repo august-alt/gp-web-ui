@@ -1,4 +1,4 @@
-import { FormLabel } from "@/components/ui/form"
+import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
@@ -8,7 +8,7 @@ export function ShortcutsWidget() {
     <div className="space-y-6 p-4">
       {/* Action Section */}
       <div className="space-y-2">
-        <FormLabel className="text-sm font-medium">Action:</FormLabel>
+        <Label className="text-sm font-medium">Action:</Label>
         <Select>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Create" />
@@ -27,7 +27,7 @@ export function ShortcutsWidget() {
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <FormLabel className="text-sm font-medium">Name:</FormLabel>
+            <Label className="text-sm font-medium">Name:</Label>
             <div className="flex space-x-2">
               <Input className="flex-1" placeholder="Shortcut name" />
               <button className="px-2 py-1 border rounded text-xs">...</button>
@@ -35,7 +35,7 @@ export function ShortcutsWidget() {
           </div>
 
           <div className="space-y-2">
-            <FormLabel className="text-sm font-medium">Target type:</FormLabel>
+            <Label className="text-sm font-medium">Target type:</Label>
             <Select>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="FILESYSTEM" />
@@ -51,7 +51,7 @@ export function ShortcutsWidget() {
 
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <FormLabel className="text-sm font-medium">Location:</FormLabel>
+            <Label className="text-sm font-medium">Location:</Label>
             <Select>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="[Specify full path]" />
@@ -83,7 +83,7 @@ export function ShortcutsWidget() {
       {/* Target Path Section */}
       <div className="space-y-4">
         <div className="space-y-2">
-          <FormLabel className="text-sm font-medium">Target path:</FormLabel>
+          <Label className="text-sm font-medium">Target path:</Label>
           <div className="flex space-x-2">
             <Input className="flex-1" placeholder="Path" />
             <button className="px-2 py-1 border rounded text-xs">...</button>
@@ -91,7 +91,7 @@ export function ShortcutsWidget() {
         </div>
 
         <div className="space-y-2">
-          <FormLabel className="text-sm font-medium">Arguments:</FormLabel>
+          <Label className="text-sm font-medium">Arguments:</Label>
           <Input placeholder="Arguments" />
         </div>
       </div>
@@ -100,7 +100,7 @@ export function ShortcutsWidget() {
       {/* Icon File Section */}
       <div className="space-y-4">
         <div className="space-y-2">
-          <FormLabel className="text-sm font-medium">Icon file path:</FormLabel>
+          <Label className="text-sm font-medium">Icon file path:</Label>
           <div className="flex space-x-2">
             <Input className="flex-1" placeholder="Icon path" />
             <button className="px-2 py-1 border rounded text-xs">...</button>
@@ -108,7 +108,7 @@ export function ShortcutsWidget() {
         </div>
 
         <div className="space-y-2">
-          <FormLabel className="text-sm font-medium">Icon index:</FormLabel>
+          <Label className="text-sm font-medium">Icon index:</Label>
           <Input placeholder="Index" disabled />
         </div>
       </div>
@@ -117,7 +117,7 @@ export function ShortcutsWidget() {
       {/* Start In Section */}
       <div className="space-y-4">
         <div className="space-y-2">
-          <FormLabel className="text-sm font-medium">Start in:</FormLabel>
+          <Label className="text-sm font-medium">Start in:</Label>
           <div className="flex space-x-2">
             <Input className="flex-1" placeholder="Start directory" />
             <button className="px-2 py-1 border rounded text-xs">...</button>
@@ -125,12 +125,12 @@ export function ShortcutsWidget() {
         </div>
 
         <div className="space-y-2">
-          <FormLabel className="text-sm font-medium">Shortcut key:</FormLabel>
+          <Label className="text-sm font-medium">Shortcut key:</Label>
           <Input placeholder="Ctrl+..." />
         </div>
 
         <div className="space-y-2">
-          <FormLabel className="text-sm font-medium">Run:</FormLabel>
+          <Label className="text-sm font-medium">Run:</Label>
           <Select>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Normal Window" />
@@ -144,7 +144,7 @@ export function ShortcutsWidget() {
         </div>
 
         <div className="space-y-2">
-          <FormLabel className="text-sm font-medium">Comment:</FormLabel>
+          <Label className="text-sm font-medium">Comment:</Label>
           <Input placeholder="Comment" />
         </div>
       </div>
