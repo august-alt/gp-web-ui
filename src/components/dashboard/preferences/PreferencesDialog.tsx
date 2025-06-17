@@ -34,11 +34,11 @@ export function PreferencesDialog({ preferencesType, open = false }: Preferences
             {preferencesType === "Drive Maps" && <TabsTrigger value="drive-maps">Drive Maps</TabsTrigger>}
             {preferencesType === "Files" && <TabsTrigger value="files">Files</TabsTrigger>}
             {preferencesType === "Folders" && <TabsTrigger value="folders">Folders</TabsTrigger>}
-            {preferencesType === "Ini" && <TabsTrigger value="ini">Ini</TabsTrigger>}
+            {preferencesType === "Ini Files" && <TabsTrigger value="ini">Ini</TabsTrigger>}
             {preferencesType === "Registry" && <TabsTrigger value="registry">Registry</TabsTrigger>}
-            {preferencesType === "Shares" && <TabsTrigger value="shares">Shares</TabsTrigger>}
+            {preferencesType === "Network Shares" && <TabsTrigger value="shares">Shares</TabsTrigger>}
             {preferencesType === "Shortcuts" && <TabsTrigger value="shortcuts">Shortcuts</TabsTrigger>}
-            {preferencesType === "Environment Variables" && <TabsTrigger value="variables">Environment Variables</TabsTrigger>}
+            {preferencesType === "Environment" && <TabsTrigger value="variables">Environment Variables</TabsTrigger>}
             <TabsTrigger value="common">Common</TabsTrigger>
           </TabsList>
 
@@ -60,7 +60,7 @@ export function PreferencesDialog({ preferencesType, open = false }: Preferences
               <FoldersWidget/>
             </TabsContent>
           )}
-          {preferencesType === "Ini" && (
+          {preferencesType === "Ini Files" && (
             <TabsContent value="ini" className="space-y-4">
               <IniWidget/>
             </TabsContent>
@@ -70,7 +70,7 @@ export function PreferencesDialog({ preferencesType, open = false }: Preferences
               <RegistryWidget/>
             </TabsContent>
           )}
-          {preferencesType === "Shares" && (
+          {preferencesType === "Network Shares" && (
             <TabsContent value="shares" className="space-y-4">
               <SharesWidget/>
             </TabsContent>
@@ -80,7 +80,7 @@ export function PreferencesDialog({ preferencesType, open = false }: Preferences
               <ShortcutsWidget/>
             </TabsContent>
           )}
-          {preferencesType === "Environment Variables" && (
+          {preferencesType === "Environment" && (
             <TabsContent value="variables" className="space-y-4">
               <VariablesWidget/>
             </TabsContent>
