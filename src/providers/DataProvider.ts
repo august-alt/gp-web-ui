@@ -11,6 +11,7 @@ import {
  */
 export class DataProvider implements IDataProvider {
   private static readonly BASE_URL = 'http://localhost:5173/api'; // Update with your actual API endpoint
+  private static operation_id = 0;
 
   /**
    * Fetches a list of policies from the specified resource endpoint
@@ -18,19 +19,23 @@ export class DataProvider implements IDataProvider {
    * @returns Promise containing the list of policies
    */
   public async getList<PolicyType extends IPolicy = IPolicy>(
-    resource: string
+    method: string
   ): Promise<GetListResult<PolicyType>> {
     try {
-      const response = await fetch(`${DataProvider.BASE_URL}/${resource}`);
+      const response = await fetch(`${DataProvider.BASE_URL}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" } ,
+        body: JSON.stringify({ jsonrpc: "2.0", method: method, params: [], id: ++DataProvider.operation_id })
+      });
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch list from ${resource}: ${response.statusText}`);
+        throw new Error(`Failed to fetch list from ${method}: ${response.statusText}`);
       }
 
       const data: PolicyType[] = await response.json();
       return { items: data };
     } catch (error) {
-      console.error(`DataProvider.getList error for ${resource}:`, error);
+      console.error(`DataProvider.getList error for ${method}:`, error);
       throw error;
     }
   }
@@ -42,7 +47,7 @@ export class DataProvider implements IDataProvider {
    * @returns Promise containing the single policy
    */
   public async getOne<PolicyType extends IPolicy = IPolicy>(
-    resource: string,
+    method: string,
     params: Partial<GetOneParams>
   ): Promise<GetOneResult<PolicyType>> {
     try {
@@ -51,16 +56,20 @@ export class DataProvider implements IDataProvider {
         throw new Error('ID parameter is required for getOne operation');
       }
 
-      const response = await fetch(`${DataProvider.BASE_URL}/${resource}/${id}`);
+      const response = await fetch(`${DataProvider.BASE_URL}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" } ,
+        body: JSON.stringify({ jsonrpc: "2.0", method: method, params: { id: id }, id: ++DataProvider.operation_id })
+      });
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch ${resource} with ID ${id}: ${response.statusText}`);
+        throw new Error(`Failed to fetch ${method} with ID ${id}: ${response.statusText}`);
       }
 
       const data: PolicyType = await response.json();
       return { data };
     } catch (error) {
-      console.error(`DataProvider.getOne error for ${resource} ID ${params.id}:`, error);
+      console.error(`DataProvider.getOne error for ${method} ID ${params.id}:`, error);
       throw error;
     }
   }

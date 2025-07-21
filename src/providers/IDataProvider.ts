@@ -17,11 +17,11 @@ export interface GetOneResult <PolicyType extends IPolicy = IPolicy> {
 
 export type IDataProvider = {
     getList: <PolicyType extends IPolicy = IPolicy> (
-        resource: string
+        method: string
     ) => Promise<GetListResult<PolicyType>>;
 
     getOne: <PolicyType extends IPolicy = IPolicy> (
-        resource: string,
+        method: string,
         params: Partial<GetOneParams>
     ) => Promise<GetOneResult<PolicyType>>;
 }
