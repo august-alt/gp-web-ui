@@ -3,6 +3,12 @@ import {
          type GetListResult,
          type GetOneResult,
          type GetOneParams,
+         type CreateParams,
+         type CreateResult,
+         type UpdateParams,
+         type UpdateResult,
+         type DeleteParams,
+         type DeleteResult,
          type IDataProvider
         } from './IDataProvider';
 
@@ -48,7 +54,7 @@ export class DataProvider implements IDataProvider {
    */
   public async getOne<PolicyType extends IPolicy = IPolicy>(
     method: string,
-    params: Partial<GetOneParams>
+    params: GetOneParams
   ): Promise<GetOneResult<PolicyType>> {
     try {
       const id = params.id;
@@ -70,6 +76,117 @@ export class DataProvider implements IDataProvider {
       return { data };
     } catch (error) {
       console.error(`DataProvider.getOne error for ${method} ID ${params.id}:`, error);
+      throw error;
+    }
+  }
+  /**
+   * Creates a new policy
+   * @param method - The API method to call
+   * @param params - Parameters containing the policy data
+   * @returns Promise containing the creation result
+   */
+  public async create(
+    method: string,
+    params: CreateParams,
+  ): Promise<CreateResult> {
+    try {
+      const response = await fetch(`${DataProvider.BASE_URL}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          method: method,
+          params: { ...params.data },
+          id: ++DataProvider.operation_id
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to create ${method}: ${response.statusText}`);
+      }
+
+      await response.json();
+      return;
+    } catch (error) {
+      console.error(`DataProvider.create error for ${method}:`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Updates an existing policy
+   * @param method - The API method to call
+   * @param params - Parameters containing the policy ID and data
+   * @returns Promise containing the update result
+   */
+  public async update(
+    method: string,
+    params: UpdateParams,
+  ): Promise<UpdateResult> {
+    try {
+      const id = params.id;
+      if (!id) {
+        throw new Error('ID parameter is required for update operation');
+      }
+
+      const response = await fetch(`${DataProvider.BASE_URL}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          method: method,
+          params: { id: id, ...params.data },
+          id: ++DataProvider.operation_id
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to update ${method} with ID ${id}: ${response.statusText}`);
+      }
+
+      await response.json();
+      return;
+    } catch (error) {
+      console.error(`DataProvider.update error for ${method} ID ${params.id}:`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Deletes a policy by ID
+   * @param method - The API method to call
+   * @param params - Parameters containing the policy ID
+   * @returns Promise containing the delete result
+   */
+  public async delete(
+    method: string,
+    params: DeleteParams
+  ): Promise<DeleteResult> {
+    try {
+      const id = params.id;
+      if (!id) {
+        throw new Error('ID parameter is required for delete operation');
+      }
+
+      const response = await fetch(`${DataProvider.BASE_URL}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          method: method,
+          params: { id: id },
+          id: ++DataProvider.operation_id
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete ${method} with ID ${id}: ${response.statusText}`);
+      }
+
+      await response.json();
+      return;
+    } catch (error) {
+      console.error(`DataProvider.delete error for ${method} ID ${params.id}:`, error);
       throw error;
     }
   }
