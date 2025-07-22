@@ -25,13 +25,14 @@ export class DataProvider implements IDataProvider {
    * @returns Promise containing the list of policies
    */
   public async getList<PolicyType extends IPolicy = IPolicy>(
-    method: string
+    method: string,
+    policyType: number
   ): Promise<GetListResult<PolicyType>> {
     try {
       const response = await fetch(`${DataProvider.BASE_URL}`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Accept": "application/json" } ,
-        body: JSON.stringify({ jsonrpc: "2.0", method: method, params: [], id: ++DataProvider.operation_id })
+        body: JSON.stringify({ jsonrpc: "2.0", method: method, params: { policyType: policyType, policyId: "123" }, id: ++DataProvider.operation_id })
       });
 
       if (!response.ok) {

@@ -36,7 +36,8 @@ export type DeleteResult = void;
 
 export type IDataProvider = {
     getList: <PolicyType extends IPolicy = IPolicy> (
-        method: string
+        method: string,
+        policyType: number
     ) => Promise<GetListResult<PolicyType>>;
 
     getOne: <PolicyType extends IPolicy = IPolicy> (
