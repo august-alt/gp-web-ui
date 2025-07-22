@@ -1,13 +1,26 @@
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 
+import { useEffect } from "react"
+
+import { DataProvider } from "@/providers/DataProvider"
+
 export function PreferencesTableWidget({
   help = '',
-  policyName = ''
+  policyName = '',
+  policyType = 0,
 }: {
   help?: string
   policyName?: string
+  policyType?: number
 }) {
+  useEffect(() => {
+    const dataProvider = new DataProvider();
+
+    dataProvider.getList("gpservice.basealt.ru.files.getFiles", policyType)
+      .then((data: any) => { console.log(data)});
+  }, []);
+
   return (
     <div className="flex flex-col h-full">
       {/* Policy Name Frame */}
