@@ -5,21 +5,34 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { Label } from "@/components/ui/label"
-import { useEffect } from "react"
 
 interface FilesWidgetProps {
   sourceItem: any
 }
 
 export function FilesWidget({sourceItem}: FilesWidgetProps) {
-  useEffect(() => { console.log(JSON.stringify(sourceItem))});
+  const convertIndex = () => {
+    switch (sourceItem.action)
+    {
+      case "C":
+        return "create";
+      case "R":
+        return "replace";
+      case "U":
+        return "update";
+      case "D":
+        return "delete";
+    }
+
+    return "create";
+  }
 
   return (
     <div className="flex flex-col h-full">
       {/* Action selector */}
       <div className="flex gap-2 mb-4">
         <div className="w-32 flex-1 mt-2">Action:</div>
-        <Select defaultValue="create">
+        <Select defaultValue="create" value={convertIndex()}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Select action" />
           </SelectTrigger>
