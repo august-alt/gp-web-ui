@@ -60,7 +60,11 @@ export function PreferencesTableWidget({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">Script Name</TableHead>
+                <TableHead className="w-[100px]">Name</TableHead>
+                <TableHead>Order</TableHead>
+                <TableHead>Action</TableHead>
+                <TableHead>Source</TableHead>
+                <TableHead>Target</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -70,7 +74,11 @@ export function PreferencesTableWidget({
                     key={index}
                     onClick={() => handleRowClick(item)}
                   >
-                    <TableCell className="font-medium">{item.file.fromPath}</TableCell>
+                    <TableCell className="font-medium">{item.file.fromPath?.split('/').pop()}</TableCell>
+                    <TableCell>{0}</TableCell>
+                    <TableCell>{item.file.action}</TableCell>
+                    <TableCell>{item.file.fromPath?.split('/').pop()}</TableCell>
+                    <TableCell>{item.file.targetPath?.split('/').pop()}</TableCell>
                   </TableRow>
                 ))
               ) : (
