@@ -1,5 +1,4 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { useState } from 'react'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { CommonWidget } from "@/components/dashboard/preferences/CommonWidget"
@@ -16,9 +15,10 @@ interface PreferencesDialogProps {
     preferencesType?: string
     open?: boolean
     onOpenChange?: (open: boolean) => void
+    currentItem: any
 }
 
-export function PreferencesDialog({ preferencesType, open = false, onOpenChange = (open: boolean) => {} }: PreferencesDialogProps) {
+export function PreferencesDialog({ preferencesType, open = false, onOpenChange = () => {}, currentItem }: PreferencesDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] max-h-[92vh] overflow-y-auto">
@@ -49,7 +49,7 @@ export function PreferencesDialog({ preferencesType, open = false, onOpenChange 
           )}
           {preferencesType === "Files" && (
             <TabsContent value="files" className="space-y-4">
-              <FilesWidget/>
+              <FilesWidget sourceItem={currentItem}/>
             </TabsContent>
           )}
           {preferencesType === "Folders" && (

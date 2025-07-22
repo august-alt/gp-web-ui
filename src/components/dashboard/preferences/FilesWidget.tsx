@@ -5,8 +5,15 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { Label } from "@/components/ui/label"
+import { useEffect } from "react"
 
-export function FilesWidget() {
+interface FilesWidgetProps {
+  sourceItem: any
+}
+
+export function FilesWidget({sourceItem}: FilesWidgetProps) {
+  useEffect(() => { console.log(JSON.stringify(sourceItem))});
+
   return (
     <div className="flex flex-col h-full">
       {/* Action selector */}
@@ -32,14 +39,14 @@ export function FilesWidget() {
       <div className="grid grid-cols-1 gap-4 mb-6">
         <div className="flex w-full">
           <div className="text-sm mt-2 flex-3">Source file(s):</div>
-          <Input className="flex-7" placeholder="Placeholder" />
+          <Input className="flex-7" placeholder="Placeholder" value={sourceItem.fromPath}/>
           <Button variant="outline" size="icon" className="ml-2">
             ...
           </Button>
         </div>
         <div className="flex w-full">
           <div className="text-sm mt-2 flex-3">Destination:</div>
-          <Input className="flex-7" placeholder="Placeholder" />
+          <Input className="flex-7" placeholder="Placeholder" value={sourceItem.targetPath}/>
           <Button variant="outline" size="icon" className="ml-2">
             ...
           </Button>
@@ -49,7 +56,7 @@ export function FilesWidget() {
       {/* Supress errors checkbox */}
       <div className="mb-6">
         <div className="flex items-center space-x-2">
-          <Checkbox id="supress-errors" />
+          <Checkbox id="supress-errors" checked={sourceItem.suppress}/>
           <Label
             htmlFor="supress-errors"
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -66,7 +73,7 @@ export function FilesWidget() {
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex items-center space-x-2">
-            <Checkbox id="read-only" />
+            <Checkbox id="read-only" checked={sourceItem.readonly}/>
             <Label
               htmlFor="read-only"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -75,7 +82,7 @@ export function FilesWidget() {
             </Label>
           </div>
           <div className="flex items-center space-x-2">
-            <Checkbox id="hidden" />
+            <Checkbox id="hidden" checked={sourceItem.hidden}/>
             <Label
               htmlFor="hidden"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -84,7 +91,7 @@ export function FilesWidget() {
             </Label>
           </div>
           <div className="flex items-center space-x-2">
-            <Checkbox id="archive" />
+            <Checkbox id="archive" checked={sourceItem.archive}/>
             <Label
               htmlFor="archive"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -93,7 +100,7 @@ export function FilesWidget() {
             </Label>
           </div>
           <div className="flex items-center space-x-2">
-            <Checkbox id="executable" />
+            <Checkbox id="executable" checked={sourceItem.executable}/>
             <Label
               htmlFor="executable"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"

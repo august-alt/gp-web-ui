@@ -33,6 +33,7 @@ export function PreferencesTableWidget({
   policyType?: number
 }) {
   const [items, setItems] = useState<Item[]>([])
+  const [currentItem, setCurrentItem] = useState<FileInterface>()
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -43,6 +44,7 @@ export function PreferencesTableWidget({
   }, []);
 
   const handleRowClick = (item: Item) => {
+    setCurrentItem(item.file);
     setIsOpen(true);
   };
 
@@ -110,7 +112,7 @@ export function PreferencesTableWidget({
           </div>
         </div>
       </div>
-    <PreferencesDialog preferencesType={policyName} open={isOpen} onOpenChange={setIsOpen} />
+    <PreferencesDialog currentItem={currentItem} preferencesType={policyName} open={isOpen} onOpenChange={setIsOpen} />
     </div>
   )
 }
