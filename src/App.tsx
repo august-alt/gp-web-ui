@@ -21,6 +21,7 @@ interface GroupPolicyItem {
   help?: string
   supportedOnText?: string
   policyWidget?: ContentWidgetProps
+  policyType?: number
 };
 
 type Item = TreeDataItem & GroupPolicyItem;
@@ -183,6 +184,7 @@ export default function App() {
             <PreferencesTableWidget
               help={selectedNode?.help || ''}
               policyName={selectedNode?.name || ''}
+              policyType={selectedNode?.policyType }
             />
           ) : (
             <AdministrativeTemplatesWidget
