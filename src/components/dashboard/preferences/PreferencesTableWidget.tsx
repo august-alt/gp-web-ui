@@ -1,9 +1,26 @@
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 
 import { DataProvider } from "@/providers/DataProvider"
+
+interface FileInterface {
+   action?: string,
+   archive?: boolean,
+   executable?: boolean,
+   fromPath?: string,
+   hidden?: boolean,
+   readonly?: boolean,
+   suppress?: boolean,
+   targetPath?: string
+}
+
+interface Item {
+  id: string,
+  file: FileInterface
+};
 
 export function PreferencesTableWidget({
   help = '',
@@ -14,12 +31,18 @@ export function PreferencesTableWidget({
   policyName?: string
   policyType?: number
 }) {
+  const [items, setItems] = useState<Item[]>([])
+
   useEffect(() => {
     const dataProvider = new DataProvider();
 
     dataProvider.getList("gpservice.basealt.ru.files.getFiles", policyType)
-      .then((data: any) => { console.log(data)});
+      .then((data: any) => { setItems(data.items.result); console.log(data.items.result); });
   }, []);
+
+  const handleRowClick = (item: Item) => {
+    console.log(item);
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -34,6 +57,31 @@ export function PreferencesTableWidget({
       <div className="flex flex-1 gap-2 mb-2">
         {/* Left Content Panel */}
         <div className="flex-1 min-w-56">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[100px]">Script Name</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {items.length > 0 ? (
+                items.map((item, index) => (
+                  <TableRow
+                    key={index}
+                    onClick={() => handleRowClick(item)}
+                  >
+                    <TableCell className="font-medium">{item.file.fromPath}</TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={1} className="text-center text-muted-foreground">
+                    No preferences available
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </div>
 
         {/* Right Help Panel */}
