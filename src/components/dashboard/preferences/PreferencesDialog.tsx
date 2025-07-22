@@ -26,7 +26,7 @@ export function PreferencesDialog({ preferencesType, open = false, onOpenChange 
           <DialogTitle>Preferences</DialogTitle>
         </DialogHeader>
 
-        <Tabs defaultValue="common" className="w-full">
+        <Tabs className="w-full">
           <TabsList className="flex w-full mb-4">
             {preferencesType === "Drive Maps" && <TabsTrigger value="drive-maps">Drive Maps</TabsTrigger>}
             {preferencesType === "Files" && <TabsTrigger value="files">Files</TabsTrigger>}
@@ -39,9 +39,6 @@ export function PreferencesDialog({ preferencesType, open = false, onOpenChange 
             <TabsTrigger value="common">Common</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="common" className="space-y-4">
-            <CommonWidget/>
-          </TabsContent>
           {preferencesType === "Drive Maps" && (
             <TabsContent value="drive-maps" className="space-y-4">
               <DrivesWidget/>
@@ -82,6 +79,9 @@ export function PreferencesDialog({ preferencesType, open = false, onOpenChange 
               <VariablesWidget/>
             </TabsContent>
           )}
+          <TabsContent value="common" className="space-y-4">
+            <CommonWidget/>
+          </TabsContent>
         </Tabs>
 
           <div className="flex justify-end space-x-2">
