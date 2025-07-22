@@ -13,17 +13,14 @@ import { ShortcutsWidget } from "@/components/dashboard/preferences/ShortcutsWid
 import { VariablesWidget } from "@/components/dashboard/preferences/VariablesWidget"
 
 interface PreferencesDialogProps {
-  preferencesType?: string
-  open?: boolean
+    preferencesType?: string
+    open?: boolean
+    onOpenChange?: (open: boolean) => void
 }
 
-export function PreferencesDialog({ preferencesType, open = false }: PreferencesDialogProps) {
-  const [isOpen, setIsOpen] = useState(open)
+export function PreferencesDialog({ preferencesType, open = false, onOpenChange = (open: boolean) => {} }: PreferencesDialogProps) {
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" onClick={() => { setIsOpen(true) }}>Open Preferences</Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] max-h-[92vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Preferences</DialogTitle>
@@ -88,8 +85,8 @@ export function PreferencesDialog({ preferencesType, open = false }: Preferences
         </Tabs>
 
           <div className="flex justify-end space-x-2">
-          <Button variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
-          <Button onClick={() => setIsOpen(false)}>OK</Button>
+          <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
+          <Button onClick={() => onOpenChange(false)}>OK</Button>
         </div>
       </DialogContent>
     </Dialog>

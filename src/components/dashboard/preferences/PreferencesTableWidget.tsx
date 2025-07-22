@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useState, useEffect } from "react"
 
 import { DataProvider } from "@/providers/DataProvider"
+import { PreferencesDialog } from "@/components/dashboard/preferences/PreferencesDialog"
 
 interface FileInterface {
    action?: string,
@@ -32,6 +33,7 @@ export function PreferencesTableWidget({
   policyType?: number
 }) {
   const [items, setItems] = useState<Item[]>([])
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     const dataProvider = new DataProvider();
@@ -41,7 +43,7 @@ export function PreferencesTableWidget({
   }, []);
 
   const handleRowClick = (item: Item) => {
-    console.log(item);
+    setIsOpen(true);
   };
 
   return (
@@ -75,7 +77,7 @@ export function PreferencesTableWidget({
                     onClick={() => handleRowClick(item)}
                   >
                     <TableCell className="font-medium">{item.file.fromPath?.split('/').pop()}</TableCell>
-                    <TableCell>{0}</TableCell>
+                    <TableCell>{index}</TableCell>
                     <TableCell>{item.file.action}</TableCell>
                     <TableCell>{item.file.fromPath?.split('/').pop()}</TableCell>
                     <TableCell>{item.file.targetPath?.split('/').pop()}</TableCell>
@@ -108,6 +110,7 @@ export function PreferencesTableWidget({
           </div>
         </div>
       </div>
+    <PreferencesDialog preferencesType={policyName} open={isOpen} onOpenChange={setIsOpen} />
     </div>
   )
 }
