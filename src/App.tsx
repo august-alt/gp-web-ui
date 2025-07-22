@@ -8,6 +8,7 @@ import { ScriptsTableWidget } from "@/components/dashboard/scripts/ScriptsTableW
 import { TemplateFilterDialog } from "@/components/dashboard/TemplateFilterDialog"
 import { AboutDialog } from "@/components/dashboard/AboutDialog"
 import { ServerErrorDialog } from "@/components/dashboard/ServerErrorDialog"
+import { PreferencesTableWidget } from "./components/dashboard/preferences/PreferencesTableWidget"
 
 import { TreeView, type TreeDataItem } from "@/components/ui/tree-view"
 
@@ -170,6 +171,19 @@ export default function App() {
               { name: "Startup" },
               { name: "Shutdown" }
             ]} />
+          ) : (selectedNode?.name === "Environment"
+            || selectedNode?.name === "Files"
+            || selectedNode?.name === "Folders"
+            || selectedNode?.name === "Ini Files"
+            || selectedNode?.name === "Registry"
+            || selectedNode?.name === "Network Shares"
+            || selectedNode?.name === "Shortcuts"
+            || selectedNode?.name === "Drive Maps"
+          )? (
+            <PreferencesTableWidget
+              help={selectedNode?.help || ''}
+              policyName={selectedNode?.name || ''}
+            />
           ) : (
             <AdministrativeTemplatesWidget
               help={selectedNode?.help || ''}
