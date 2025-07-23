@@ -4,9 +4,15 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { type IIniFileInterface } from './IIniFileInterface'
+import { convertIndex } from './Helpers'
 
-export function IniWidget() {
-  const [action, setAction] = useState("Create")
+interface IniWidgetProps {
+  sourceItem: IIniFileInterface
+}
+
+export function IniWidget({sourceItem}:IniWidgetProps) {
+  const [action, setAction] = useState(convertIndex(sourceItem.action))
 
   return (
     <div className="space-y-4 p-4">

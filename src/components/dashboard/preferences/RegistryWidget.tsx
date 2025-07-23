@@ -5,15 +5,21 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { type IRegistryInterface } from './IRegistryInterface'
+import { convertIndex } from './Helpers'
 
-export const RegistryWidget = () => {
-  const [action, setAction] = useState("Create")
-  const [hive, setHive] = useState("HKEY_CURRENT_USER")
-  const [keyPath, setKeyPath] = useState("")
-  const [defaultValue, setDefaultValue] = useState(true)
-  const [valueName, setValueName] = useState("")
-  const [valueType, setValueType] = useState("REG_SZ")
-  const [valueData, setValueData] = useState("")
+interface RegistryWidgetProps {
+  sourceItem: IRegistryInterface
+}
+
+export const RegistryWidget = ({sourceItem}:RegistryWidgetProps) => {
+  const [action, setAction] = useState(convertIndex(sourceItem.action))
+  const [hive, setHive] = useState(sourceItem.hive || "HKEY_CURRENT_USER")
+  const [keyPath, setKeyPath] = useState(sourceItem.key || "")
+  const [defaultValue, setDefaultValue] = useState(sourceItem.default)
+  const [valueName, setValueName] = useState(sourceItem.name || "")
+  const [valueType, setValueType] = useState(sourceItem.type || "REG_SZ")
+  const [valueData, setValueData] = useState(sourceItem.value || "")
 
   return (
     <div className="flex flex-col gap-4 p-4">

@@ -3,8 +3,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { type IEnvironmentInterface } from './IEnvironmentInterface'
+import { convertIndex } from './Helpers'
 
-export function VariablesWidget() {
+interface ShortcutsWidgetProps {
+  sourceItem: IEnvironmentInterface
+}
+
+export function VariablesWidget({sourceItem}:ShortcutsWidgetProps) {
   return (
     <div className="space-y-4">
       {/* Action ComboBox Section */}

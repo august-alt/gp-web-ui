@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -6,18 +6,24 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
+import { type IFolderInterface } from './IFolderInterface'
+import { convertIndex } from './Helpers'
 
-export const FoldersWidget: React.FC = () => {
-  const [action, setAction] = useState("Create")
-  const [path, setPath] = useState("Placeholder")
-  const [readOnly, setReadOnly] = useState(false)
-  const [hidden, setHidden] = useState(false)
-  const [archive, setArchive] = useState(false)
-  const [deleteThisFolder, setDeleteThisFolder] = useState(false)
-  const [recursiveDelete, setRecursiveDelete] = useState(false)
-  const [deleteAllFiles, setDeleteAllFiles] = useState(false)
-  const [allowDeletionOfReadOnly, setAllowDeletionOfReadOnly] = useState(false)
-  const [ignoreErrors, setIgnoreErrors] = useState(false)
+interface FoldersWidgetProps {
+  sourceItem: IFolderInterface
+}
+
+export const FoldersWidget = ({sourceItem}:FoldersWidgetProps) => {
+  const [action, setAction] = useState(convertIndex(sourceItem.action))
+  const [path, setPath] = useState(sourceItem.fromPath)
+  const [readOnly, setReadOnly] = useState(sourceItem.readonly || false)
+  const [hidden, setHidden] = useState(sourceItem.hidden || false)
+  const [archive, setArchive] = useState(sourceItem.archive || false)
+  const [deleteThisFolder, setDeleteThisFolder] = useState(sourceItem.deleteFolder || false)
+  const [recursiveDelete, setRecursiveDelete] = useState(sourceItem.deleteSubFolders || false)
+  const [deleteAllFiles, setDeleteAllFiles] = useState(sourceItem.deleteFiles || false)
+  const [allowDeletionOfReadOnly, setAllowDeletionOfReadOnly] = useState(sourceItem.deleteReadOnly || false)
+  const [ignoreErrors, setIgnoreErrors] = useState(sourceItem.deleteIgnoreErrors || false)
 
   return (
     <div className="space-y-4">

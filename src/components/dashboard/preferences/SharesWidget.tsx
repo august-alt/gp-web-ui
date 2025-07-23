@@ -5,20 +5,26 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
+import { type IShareInterface } from './IShareInterface'
+import { convertIndex } from './Helpers'
 
-export function SharesWidget() {
-  const [action, setAction] = useState("Create")
-  const [shareName, setShareName] = useState("")
-  const [folderPath, setFolderPath] = useState("")
-  const [comment, setComment] = useState("")
+interface SharesyWidgetProps {
+  sourceItem: IShareInterface
+}
+
+export function SharesWidget({sourceItem}:SharesyWidgetProps) {
+  const [action, setAction] = useState(convertIndex(sourceItem.action))
+  const [shareName, setShareName] = useState(sourceItem.name || "")
+  const [folderPath, setFolderPath] = useState(sourceItem.path || "")
+  const [comment, setComment] = useState(sourceItem.comment ||"")
   const [modifiers, setModifiers] = useState({
-    updateAllRegular: false,
-    updateAllHidden: false,
-    updateAllAdmin: false
+    updateAllRegular: sourceItem.allRegular || false,
+    updateAllHidden: sourceItem.allHidden ||  false,
+    updateAllAdmin: sourceItem.allAdminDrive || false
   })
-  const [userLimit, setUserLimit] = useState("noChange")
-  const [accessSetting, setAccessSetting] = useState("noChange")
-  const [userCount, setUserCount] = useState(10)
+  const [userLimit, setUserLimit] = useState(sourceItem.limitUsers || "noChange")
+  const [accessSetting, setAccessSetting] = useState(sourceItem.accessBasedEnumeration || "noChange")
+  const [userCount, setUserCount] = useState(sourceItem.userLimit || 10)
 
   return (
     <div className="space-y-6 p-4">

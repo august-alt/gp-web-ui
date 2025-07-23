@@ -5,7 +5,7 @@ interface IRegistryInterface {
     name?: string
     type?: string
     value?: string
-    default?: string
+    default: boolean
 }
 
 export type { IRegistryInterface }

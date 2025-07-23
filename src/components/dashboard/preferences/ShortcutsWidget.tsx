@@ -2,8 +2,14 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
+import { type IShortcutInterface } from './IShortcutInterface'
+import { convertIndex } from './Helpers'
 
-export function ShortcutsWidget() {
+interface ShortcutsWidgetProps {
+  sourceItem: IShortcutInterface
+}
+
+export function ShortcutsWidget({sourceItem}:ShortcutsWidgetProps) {
   return (
     <div className="space-y-6 p-4">
       {/* Action Section */}

@@ -4,12 +4,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+import type { IDriveMapInterface } from './IDriveMapInterface'
+import { convertIndex } from './Helpers'
 
-export const DrivesWidget = () => {
-  const [action, setAction] = useState('Create')
-  const [thisDrive, setThisDrive] = useState('noChange')
-  const [allDrives, setAllDrives] = useState('noChange')
-  const [driveLetter, setDriveLetter] = useState('A:')
+interface DrivesWidgetProps {
+  sourceItem: IDriveMapInterface
+}
+
+export const DrivesWidget = ({ sourceItem }: DrivesWidgetProps) => {
+  const [action, setAction] = useState(convertIndex(sourceItem.action))
+  const [thisDrive, setThisDrive] = useState(sourceItem.thisDrive?.toString() || 'noChange')
+  const [allDrives, setAllDrives] = useState(sourceItem.allDrives?.toString() || 'noChange')
+  const [driveLetter, setDriveLetter] = useState(sourceItem.letter || 'A:')
 
   return (
     <Card className="p-4 space-y-4">
