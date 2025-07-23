@@ -6,17 +6,7 @@ import { useState, useEffect } from "react"
 
 import { DataProvider } from "@/providers/DataProvider"
 import { PreferencesDialog } from "@/components/dashboard/preferences/PreferencesDialog"
-
-interface FileInterface {
-   action?: string,
-   archive?: boolean,
-   executable?: boolean,
-   fromPath?: string,
-   hidden?: boolean,
-   readonly?: boolean,
-   suppress?: boolean,
-   targetPath?: string
-}
+import { type FileInterface } from "@/components/dashboard/preferences/IFileInterface"
 
 interface Item {
   id: string,
