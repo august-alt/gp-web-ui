@@ -41,7 +41,7 @@ export function PreferencesDialog({ preferencesType, open = false, onOpenChange 
 
           {preferencesType === "Drive Maps" && (
             <TabsContent value="drive-maps" className="space-y-4">
-              <DrivesWidget/>
+              <DrivesWidget sourceItem={currentItem}/>
             </TabsContent>
           )}
           {preferencesType === "Files" && (
@@ -51,32 +51,32 @@ export function PreferencesDialog({ preferencesType, open = false, onOpenChange 
           )}
           {preferencesType === "Folders" && (
             <TabsContent value="folders" className="space-y-4">
-              <FoldersWidget/>
+              <FoldersWidget sourceItem={currentItem}/>
             </TabsContent>
           )}
           {preferencesType === "Ini Files" && (
             <TabsContent value="ini" className="space-y-4">
-              <IniWidget/>
+              <IniWidget sourceItem={currentItem}/>
             </TabsContent>
           )}
           {preferencesType === "Registry" && (
             <TabsContent value="registry" className="space-y-4">
-              <RegistryWidget/>
+              <RegistryWidget sourceItem={currentItem}/>
             </TabsContent>
           )}
           {preferencesType === "Network Shares" && (
             <TabsContent value="shares" className="space-y-4">
-              <SharesWidget/>
+              <SharesWidget sourceItem={currentItem}/>
             </TabsContent>
           )}
           {preferencesType === "Shortcuts" && (
             <TabsContent value="shortcuts" className="space-y-4">
-              <ShortcutsWidget/>
+              <ShortcutsWidget sourceItem={currentItem}/>
             </TabsContent>
           )}
           {preferencesType === "Environment" && (
             <TabsContent value="variables" className="space-y-4">
-              <VariablesWidget/>
+              <VariablesWidget sourceItem={currentItem}/>
             </TabsContent>
           )}
           <TabsContent value="common" className="space-y-4">

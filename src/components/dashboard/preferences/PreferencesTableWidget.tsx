@@ -6,11 +6,10 @@ import { useState, useEffect } from "react"
 
 import { DataProvider } from "@/providers/DataProvider"
 import { PreferencesDialog } from "@/components/dashboard/preferences/PreferencesDialog"
-import { type FileInterface } from "@/components/dashboard/preferences/IFileInterface"
 
 interface Item {
   id: string,
-  file: FileInterface
+  data: any
 };
 
 export function PreferencesTableWidget({
@@ -23,18 +22,18 @@ export function PreferencesTableWidget({
   policyType?: number
 }) {
   const [items, setItems] = useState<Item[]>([])
-  const [currentItem, setCurrentItem] = useState<FileInterface>()
+  const [currentItem, setCurrentItem] = useState<any>()
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     const dataProvider = new DataProvider();
 
-    dataProvider.getList("gpservice.basealt.ru.files.getFiles", policyType)
+    dataProvider.getList(`gpservice.basealt.ru.${policyName.toLowerCase()}.getAll`, policyType)
       .then((data: any) => { setItems(data.items.result); console.log(data.items.result); });
   }, []);
 
   const handleRowClick = (item: Item) => {
-    setCurrentItem(item.file);
+    setCurrentItem(item.data);
     setIsOpen(true);
   };
 
@@ -54,11 +53,11 @@ export function PreferencesTableWidget({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">Name</TableHead>
+                {/* <TableHead className="w-[100px]">Name</TableHead> */}
                 <TableHead>Order</TableHead>
                 <TableHead>Action</TableHead>
-                <TableHead>Source</TableHead>
-                <TableHead>Target</TableHead>
+                {/* <TableHead>Source</TableHead>
+                <TableHead>Target</TableHead> */}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -68,11 +67,11 @@ export function PreferencesTableWidget({
                     key={index}
                     onClick={() => handleRowClick(item)}
                   >
-                    <TableCell className="font-medium">{item.file.fromPath?.split('/').pop()}</TableCell>
+                    {/* <TableCell className="font-medium">{item.data.fromPath?.split('/').pop()}</TableCell> */}
                     <TableCell>{index}</TableCell>
-                    <TableCell>{item.file.action}</TableCell>
-                    <TableCell>{item.file.fromPath?.split('/').pop()}</TableCell>
-                    <TableCell>{item.file.targetPath?.split('/').pop()}</TableCell>
+                    <TableCell>{item.data.action}</TableCell>
+                    {/* <TableCell>{item.data.fromPath?.split('/').pop()}</TableCell>
+                    <TableCell>{item.data.targetPath?.split('/').pop()}</TableCell> */}
                   </TableRow>
                 ))
               ) : (
