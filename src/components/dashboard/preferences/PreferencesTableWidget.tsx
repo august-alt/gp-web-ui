@@ -25,10 +25,36 @@ export function PreferencesTableWidget({
   const [currentItem, setCurrentItem] = useState<any>()
   const [isOpen, setIsOpen] = useState(false)
 
+  const adjustPolicyName = (policyName: string): string => {
+    switch(policyName.toLowerCase())
+    {
+      case "environment":
+        return "variables";
+      case "drive maps":
+        return "drives";
+      case "files":
+        return "files";
+      case "folders":
+        return "folders";
+      case "ini files":
+        return "inis";
+      case "network shares":
+        return "shares";
+      case "registry":
+        return "registry";
+      case "shortcuts":
+        return "shortcuts";
+    }
+
+    return "";
+  }
+
   useEffect(() => {
     const dataProvider = new DataProvider();
 
-    dataProvider.getList(`gpservice.basealt.ru.${policyName.toLowerCase()}.getAll`, policyType)
+    const currentPolicyName = adjustPolicyName(policyName);
+
+    dataProvider.getList(`gpservice.basealt.ru.${currentPolicyName}.getAll`, policyType)
       .then((data: any) => { setItems(data.items.result); console.log(data.items.result); });
   }, [policyName, policyType]);
 
