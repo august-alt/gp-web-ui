@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://10.64.64.2:5000',
+        target: 'http://10.64.64.3:5000',
         secure: false
       }
     }
