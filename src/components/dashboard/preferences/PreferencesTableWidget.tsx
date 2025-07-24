@@ -16,6 +16,14 @@ import type { IRegistryInterface } from "./IRegistryInterface"
 import type { IIniFileInterface } from "./IIniFileInterface"
 import type { IShareInterface } from "./IShareInterface"
 
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu"
+
 interface Item {
   id: string,
   data: any
@@ -142,35 +150,57 @@ export function PreferencesTableWidget({
       <div className="flex flex-1 gap-2 mb-2">
         {/* Left Content Panel */}
         <div className="flex-1 min-w-56">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                {getHeadersForPolicyName(policyName).map((header, index) => (
-                  <TableHead key={index}>{header}</TableHead>
-                ))}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {items.length > 0 ? (
-                items.map((item, index) => (
-                  <TableRow
-                    key={index}
-                    onClick={() => handleRowClick(item)}
-                  >
-                    {getCellForPolicyItem(policyName, item.data, index).map((cell, cellIndex) => (
-                      <TableCell key={cellIndex}>{cell}</TableCell>
+          <ContextMenu>
+            <ContextMenuTrigger>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    {getHeadersForPolicyName(policyName).map((header, index) => (
+                      <TableHead key={index}>{header}</TableHead>
                     ))}
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={1} className="text-center text-muted-foreground">
-                    No preferences available
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+                </TableHeader>
+                <TableBody>
+                  {items.length > 0 ? (
+                    items.map((item, index) => (
+                      <TableRow
+                        key={index}
+                        onClick={() => handleRowClick(item)}
+                      >
+
+                        {getCellForPolicyItem(policyName, item.data, index).map((cell, cellIndex) => (
+                          <TableCell key={cellIndex}>{cell}</TableCell>
+                        ))}
+
+                      </TableRow>
+
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={1} className="text-center text-muted-foreground">
+                        No preferences available
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </ContextMenuTrigger>
+            <ContextMenuContent className="w-52">
+              <ContextMenuItem inset>
+                New
+              </ContextMenuItem>
+              <ContextMenuItem inset>
+                Edit Item
+              </ContextMenuItem>
+              <ContextMenuItem inset>
+                Remove Item
+              </ContextMenuItem>
+              <ContextMenuSeparator />
+              <ContextMenuItem inset>
+                Help
+              </ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenu>
         </div>
 
         {/* Right Help Panel */}
