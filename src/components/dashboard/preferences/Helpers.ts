@@ -13,3 +13,7 @@ export const convertIndex = (action: number) => {
 
     return "Create";
   }
+
+export const getBasename = (filename: string | undefined): string => {
+    return filename ? filename.split("/").pop() || "" : "";
+}

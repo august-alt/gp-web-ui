@@ -6,7 +6,15 @@ import { useState, useEffect } from "react"
 
 import { DataProvider } from "@/providers/DataProvider"
 import { PreferencesDialog } from "@/components/dashboard/preferences/PreferencesDialog"
-import { convertIndex } from './Helpers'
+import { convertIndex, getBasename } from './Helpers'
+import type { IEnvironmentInterface } from "./IEnvironmentInterface"
+import type { IDriveMapInterface } from "./IDriveMapInterface"
+import type { IFileInterface } from "./IFileInterface"
+import type { IFolderInterface } from "./IFolderInterface"
+import type { IShortcutInterface } from "./IShortcutInterface"
+import type { IRegistryInterface } from "./IRegistryInterface"
+import type { IIniFileInterface } from "./IIniFileInterface"
+import type { IShareInterface } from "./IShareInterface"
 
 interface Item {
   id: string,
@@ -25,6 +33,62 @@ export function PreferencesTableWidget({
   const [items, setItems] = useState<Item[]>([])
   const [currentItem, setCurrentItem] = useState<any>()
   const [isOpen, setIsOpen] = useState(false)
+
+  const getHeadersForPolicyName = (policyName: string): string[] => {
+    switch(policyName.toLowerCase())
+    {
+      case "environment":
+        return ["Name", "Order", "Action", "Value", "User"];
+      case "drive maps":
+        return ["Name", "Order", "Action", "Path", "Reconnect"];
+      case "files":
+        return ["Name", "Order", "Action", "Source", "Target"];
+      case "folders":
+        return ["Name", "Order", "Action", "Path"];
+      case "ini files":
+        return ["Name", "Order", "Action", "Path", "Section", "Property", "Value"];
+      case "network shares":
+        return ["Name", "Order", "Action", "Path", "User Limit", "ABE"];
+      case "registry":
+        return ["Name", "Order", "Action", "Hive", "Key"];
+      case "shortcuts":
+        return ["Name", "Order", "Action", "Target"];
+      default:
+        return [];
+    }
+  };
+
+  const getCellForPolicyItem = (policyName: string, item: any, index: number): string[] => {
+    switch(policyName.toLowerCase())
+    {
+      case "environment":
+        const ev = item as IEnvironmentInterface;
+        return [ev?.name || "", index.toString(), convertIndex(ev?.action || 0), ev?.value || "", ev?.user ? "True" : "False"];
+      case "drive maps":
+        const dm = item as IDriveMapInterface;
+        return [getBasename(dm.path), index.toString(), convertIndex(dm?.action || 0), dm?.path || "", dm?.persistent ? "True" : "False"];
+      case "files":
+        const fl = items as IFileInterface;
+        return [getBasename(fl.fromPath), index.toString(), convertIndex(fl?.action || 0), fl?.fromPath || "", fl?.targetPath || ""];
+      case "folders":
+        const fo = item as IFolderInterface;
+        return [getBasename(fo.fromPath), index.toString(), convertIndex(fo?.action || 0), fo?.fromPath || ""];
+      case "ini files":
+        const il = item as IIniFileInterface;
+        return [getBasename(il.path), index.toString(), convertIndex(il?.action || 0), il?.path || "", il?.section || "", il?.property || "", il?.value || ""];
+      case "network shares":
+        const ns = item as IShareInterface;
+        return [ns?.name || "", index.toString(), convertIndex(ns?.action || 0), ns?.path || "", ns?.userLimit?.toString() || "Unlimited", ns?.accessBasedEnumeration ? "True" : "False"];
+      case "registry":
+        const re = item as IRegistryInterface;
+        return [re?.name || "", index.toString(), convertIndex(re?.action || 0), re?.hive || "", re?.key || ""];
+      case "shortcuts":
+        const sh = item as IShortcutInterface;
+        return [getBasename(sh.shortcutPath), index.toString(), convertIndex(sh?.action || 0), sh?.targetPath || ""];
+      default:
+        return [];
+    }
+  };
 
   const adjustPolicyName = (policyName: string): string => {
     switch(policyName.toLowerCase())
@@ -80,11 +144,9 @@ export function PreferencesTableWidget({
           <Table>
             <TableHeader>
               <TableRow>
-                {/* <TableHead className="w-[100px]">Name</TableHead> */}
-                <TableHead>Order</TableHead>
-                <TableHead>Action</TableHead>
-                {/* <TableHead>Source</TableHead>
-                <TableHead>Target</TableHead> */}
+                {getHeadersForPolicyName(policyName).map((header, index) => (
+                  <TableHead key={index}>{header}</TableHead>
+                ))}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -94,11 +156,9 @@ export function PreferencesTableWidget({
                     key={index}
                     onClick={() => handleRowClick(item)}
                   >
-                    {/* <TableCell className="font-medium">{item.data.fromPath?.split('/').pop()}</TableCell> */}
-                    <TableCell>{index}</TableCell>
-                    <TableCell>{convertIndex(item.data.action)}</TableCell>
-                    {/* <TableCell>{item.data.fromPath?.split('/').pop()}</TableCell>
-                    <TableCell>{item.data.targetPath?.split('/').pop()}</TableCell> */}
+                    {getCellForPolicyItem(policyName, item.data, index).map((cell) => (
+                      <TableCell>{cell}</TableCell>
+                    ))}
                   </TableRow>
                 ))
               ) : (

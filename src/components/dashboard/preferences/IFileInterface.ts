@@ -1,4 +1,4 @@
-interface FileInterface {
+interface IFileInterface {
     action?: number
     archive?: boolean
     executable?: boolean
@@ -9,4 +9,4 @@ interface FileInterface {
     targetPath?: string
  }
 
- export type { FileInterface };
+ export type { IFileInterface };
