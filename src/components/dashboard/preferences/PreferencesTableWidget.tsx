@@ -30,7 +30,7 @@ export function PreferencesTableWidget({
 
     dataProvider.getList(`gpservice.basealt.ru.${policyName.toLowerCase()}.getAll`, policyType)
       .then((data: any) => { setItems(data.items.result); console.log(data.items.result); });
-  }, []);
+  }, [policyName, policyType]);
 
   const handleRowClick = (item: Item) => {
     setCurrentItem(item.data);
