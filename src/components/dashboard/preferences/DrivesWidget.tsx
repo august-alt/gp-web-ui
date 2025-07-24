@@ -12,7 +12,7 @@ interface DrivesWidgetProps {
 }
 
 export const DrivesWidget = ({ sourceItem }: DrivesWidgetProps) => {
-  const [action, setAction] = useState(convertIndex(sourceItem.action))
+  const [action, setAction] = useState(convertIndex(sourceItem?.action || 0))
   const [thisDrive, setThisDrive] = useState(sourceItem.thisDrive?.toString() || 'noChange')
   const [allDrives, setAllDrives] = useState(sourceItem.allDrives?.toString() || 'noChange')
   const [driveLetter, setDriveLetter] = useState(sourceItem.letter || 'A:')

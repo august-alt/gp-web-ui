@@ -13,7 +13,7 @@ interface RegistryWidgetProps {
 }
 
 export const RegistryWidget = ({sourceItem}:RegistryWidgetProps) => {
-  const [action, setAction] = useState(convertIndex(sourceItem.action))
+  const [action, setAction] = useState(convertIndex(sourceItem?.action || 0))
   const [hive, setHive] = useState(sourceItem.hive || "HKEY_CURRENT_USER")
   const [keyPath, setKeyPath] = useState(sourceItem.key || "")
   const [defaultValue, setDefaultValue] = useState(sourceItem.default)

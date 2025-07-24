@@ -2,6 +2,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
+import { useState } from "react"
 import { type IShortcutInterface } from './IShortcutInterface'
 import { convertIndex } from './Helpers'
 
@@ -10,12 +11,25 @@ interface ShortcutsWidgetProps {
 }
 
 export function ShortcutsWidget({sourceItem}:ShortcutsWidgetProps) {
+  const [action, setAction] = useState(convertIndex(sourceItem?.action || 0))
+  const [shortcutPath, setShortcutPath] = useState(sourceItem.shortcutPath || "")
+  const [targetType, setTargetType] = useState(sourceItem.targetType?.toString() || "")
+  const [targetPath, setTargetPath] = useState(sourceItem.targetPath || "")
+  const [location, setLocation] = useState(sourceItem.location?.toString() || "")
+  const [argumentsValue, setArgumentsValue] = useState(sourceItem.arguments || "")
+  const [startIn, setStartIn] = useState(sourceItem.startIn || "")
+  const [window, setWindow] = useState(sourceItem.window?.toString() || "")
+  const [comment, setComment] = useState(sourceItem.comment || "")
+  const [iconPath, setIconPath] = useState(sourceItem.iconPath || "")
+  const [iconIndex, setIconIndex] = useState(sourceItem.iconIndex || "")
+  const [shortcutKey, setShortcutKey] = useState(sourceItem.shortcutKey || "")
+
   return (
     <div className="space-y-6 p-4">
       {/* Action Section */}
       <div className="space-y-2">
         <Label className="text-sm font-medium">Action:</Label>
-        <Select>
+       <Select value={action} onValueChange={setAction}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Create" />
           </SelectTrigger>
@@ -35,7 +49,12 @@ export function ShortcutsWidget({sourceItem}:ShortcutsWidgetProps) {
           <div className="space-y-2">
             <Label className="text-sm font-medium">Name:</Label>
             <div className="flex space-x-2">
-              <Input className="flex-1" placeholder="Shortcut name" />
+              <Input
+                className="flex-1"
+                placeholder="Shortcut name"
+                // value={name}
+                // onChange={(e) => setName(e.target.value)}
+              />
               <button className="px-2 py-1 border rounded text-xs">...</button>
             </div>
           </div>
@@ -91,14 +110,23 @@ export function ShortcutsWidget({sourceItem}:ShortcutsWidgetProps) {
         <div className="space-y-2">
           <Label className="text-sm font-medium">Target path:</Label>
           <div className="flex space-x-2">
-            <Input className="flex-1" placeholder="Path" />
+            <Input
+              className="flex-1"
+              placeholder="Path"
+              value={targetPath}
+              onChange={(e) => setTargetPath(e.target.value)}
+            />
             <button className="px-2 py-1 border rounded text-xs">...</button>
           </div>
         </div>
 
         <div className="space-y-2">
           <Label className="text-sm font-medium">Arguments:</Label>
-          <Input placeholder="Arguments" />
+          <Input
+            placeholder="Arguments"
+            value={argumentsValue}
+            onChange={(e) => setArgumentsValue(e.target.value)}
+          />
         </div>
       </div>
       <Separator />
@@ -108,14 +136,24 @@ export function ShortcutsWidget({sourceItem}:ShortcutsWidgetProps) {
         <div className="space-y-2">
           <Label className="text-sm font-medium">Icon file path:</Label>
           <div className="flex space-x-2">
-            <Input className="flex-1" placeholder="Icon path" />
+            <Input
+              className="flex-1"
+              placeholder="Icon path"
+              value={iconPath}
+              onChange={(e) => setIconPath(e.target.value)}
+            />
             <button className="px-2 py-1 border rounded text-xs">...</button>
           </div>
         </div>
 
         <div className="space-y-2">
           <Label className="text-sm font-medium">Icon index:</Label>
-          <Input placeholder="Index" disabled />
+          <Input
+            placeholder="Index"
+            disabled
+            value={iconIndex}
+            onChange={(e) => setIconIndex(e.target.value)}
+          />
         </div>
       </div>
       <Separator />
@@ -125,14 +163,23 @@ export function ShortcutsWidget({sourceItem}:ShortcutsWidgetProps) {
         <div className="space-y-2">
           <Label className="text-sm font-medium">Start in:</Label>
           <div className="flex space-x-2">
-            <Input className="flex-1" placeholder="Start directory" />
+            <Input
+              className="flex-1"
+              placeholder="Start directory"
+              value={startIn}
+              onChange={(e) => setStartIn(e.target.value)}
+            />
             <button className="px-2 py-1 border rounded text-xs">...</button>
           </div>
         </div>
 
         <div className="space-y-2">
           <Label className="text-sm font-medium">Shortcut key:</Label>
-          <Input placeholder="Ctrl+..." />
+          <Input
+            placeholder="Ctrl+..."
+            value={shortcutKey}
+            onChange={(e) => setShortcutKey(e.target.value)}
+          />
         </div>
 
         <div className="space-y-2">
@@ -151,7 +198,11 @@ export function ShortcutsWidget({sourceItem}:ShortcutsWidgetProps) {
 
         <div className="space-y-2">
           <Label className="text-sm font-medium">Comment:</Label>
-          <Input placeholder="Comment" />
+          <Input
+            placeholder="Comment"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
         </div>
       </div>
     </div>

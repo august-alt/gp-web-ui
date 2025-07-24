@@ -1,5 +1,5 @@
 interface IShareInterface {
-    action?: string
+    action?: number
     name?: string
     path?: string
     comment?: string

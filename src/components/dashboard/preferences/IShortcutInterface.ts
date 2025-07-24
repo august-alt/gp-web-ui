@@ -1,5 +1,5 @@
 interface IShortcutInterface {
-    action?:string
+    action?: number
     pidl?:string
     shortcutPath?:string
     targetType?:number

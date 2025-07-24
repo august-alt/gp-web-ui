@@ -1,5 +1,5 @@
 interface IFolderInterface {
-    action?: string
+    action?: number
     fromPath?: string
     readonly?: boolean
     archive?: boolean

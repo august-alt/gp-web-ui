@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 
 import { DataProvider } from "@/providers/DataProvider"
 import { PreferencesDialog } from "@/components/dashboard/preferences/PreferencesDialog"
+import { convertIndex } from './Helpers'
 
 interface Item {
   id: string,
@@ -95,7 +96,7 @@ export function PreferencesTableWidget({
                   >
                     {/* <TableCell className="font-medium">{item.data.fromPath?.split('/').pop()}</TableCell> */}
                     <TableCell>{index}</TableCell>
-                    <TableCell>{item.data.action}</TableCell>
+                    <TableCell>{convertIndex(item.data.action)}</TableCell>
                     {/* <TableCell>{item.data.fromPath?.split('/').pop()}</TableCell>
                     <TableCell>{item.data.targetPath?.split('/').pop()}</TableCell> */}
                   </TableRow>

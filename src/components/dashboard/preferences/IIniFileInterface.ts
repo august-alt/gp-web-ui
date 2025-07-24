@@ -1,5 +1,5 @@
 interface IIniFileInterface {
-    action?: string
+    action?: number
     path?: string
     section?: string
     value?: string

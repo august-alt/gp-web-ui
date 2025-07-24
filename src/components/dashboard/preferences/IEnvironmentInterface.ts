@@ -1,5 +1,5 @@
 interface IEnvironmentInterface {
-    action?: string
+    action?: number
     user?: boolean
     name?: string
     partial?: boolean

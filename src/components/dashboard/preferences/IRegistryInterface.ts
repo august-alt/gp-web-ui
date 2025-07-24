@@ -1,5 +1,5 @@
 interface IRegistryInterface {
-    action?: string
+    action?: number
     hive?: string
     key?: string
     name?: string

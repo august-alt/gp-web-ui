@@ -1,5 +1,5 @@
 interface IDriveMapInterface {
-    action?: string
+    action?: number
     path?: string
     label?: string
     userName?: string

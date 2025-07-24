@@ -13,7 +13,7 @@ interface SharesyWidgetProps {
 }
 
 export function SharesWidget({sourceItem}:SharesyWidgetProps) {
-  const [action, setAction] = useState(convertIndex(sourceItem.action))
+  const [action, setAction] = useState(convertIndex(sourceItem?.action || 0))
   const [shareName, setShareName] = useState(sourceItem.name || "")
   const [folderPath, setFolderPath] = useState(sourceItem.path || "")
   const [comment, setComment] = useState(sourceItem.comment ||"")

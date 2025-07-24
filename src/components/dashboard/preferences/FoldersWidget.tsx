@@ -14,7 +14,7 @@ interface FoldersWidgetProps {
 }
 
 export const FoldersWidget = ({sourceItem}:FoldersWidgetProps) => {
-  const [action, setAction] = useState(convertIndex(sourceItem.action))
+  const [action, setAction] = useState(convertIndex(sourceItem?.action || 0))
   const [path, setPath] = useState(sourceItem.fromPath)
   const [readOnly, setReadOnly] = useState(sourceItem.readonly || false)
   const [hidden, setHidden] = useState(sourceItem.hidden || false)

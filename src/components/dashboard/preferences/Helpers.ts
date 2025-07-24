@@ -1,15 +1,15 @@
-export const convertIndex = (action: string | undefined) => {
+export const convertIndex = (action: number) => {
     switch (action)
     {
-      case "C":
-        return "create";
-      case "R":
-        return "replace";
-      case "U":
-        return "update";
-      case "D":
-        return "delete";
+      case 0:
+        return "Create";
+      case 1:
+        return "Replace";
+      case 2:
+        return "Update";
+      case 3:
+        return "Delete";
     }
 
-    return "create";
+    return "Create";
   }
