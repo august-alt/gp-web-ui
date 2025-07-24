@@ -68,7 +68,8 @@ export function PreferencesTableWidget({
         const dm = item as IDriveMapInterface;
         return [getBasename(dm.path), index.toString(), convertIndex(dm?.action || 0), dm?.path || "", dm?.persistent ? "True" : "False"];
       case "files":
-        const fl = items as IFileInterface;
+        const fl = item as IFileInterface;
+        console.log("File", fl);
         return [getBasename(fl.fromPath), index.toString(), convertIndex(fl?.action || 0), fl?.fromPath || "", fl?.targetPath || ""];
       case "folders":
         const fo = item as IFolderInterface;
@@ -156,8 +157,8 @@ export function PreferencesTableWidget({
                     key={index}
                     onClick={() => handleRowClick(item)}
                   >
-                    {getCellForPolicyItem(policyName, item.data, index).map((cell) => (
-                      <TableCell>{cell}</TableCell>
+                    {getCellForPolicyItem(policyName, item.data, index).map((cell, cellIndex) => (
+                      <TableCell key={cellIndex}>{cell}</TableCell>
                     ))}
                   </TableRow>
                 ))
