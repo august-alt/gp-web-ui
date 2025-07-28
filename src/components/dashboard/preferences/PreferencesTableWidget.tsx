@@ -133,9 +133,25 @@ export function PreferencesTableWidget({
   }, [policyName, policyType]);
 
   const handleRowClick = (item: Item) => {
-    setCurrentItem(item.data);
+    setCurrentItem(item);
     setIsOpen(true);
   };
+
+  const openHelpUrl = () => {
+    window.open("https://www.altlinux.org/%D0%93%D1%80%D1%83%D0%BF%D0%BF%D0%BE%D0%B2%D1%8B%D0%B5_%D0%BF%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B8/GPUI", "_blank");
+  }
+
+  const removeItem = () => {
+    const dataProvider = new DataProvider();
+
+    const currentPolicyName = adjustPolicyName(policyName);
+
+    dataProvider.delete(`gpservice.basealt.ru.${currentPolicyName}.delete_`, policyType, { id: currentItem.id })
+      .then(() => {});
+
+    dataProvider.getList(`gpservice.basealt.ru.${currentPolicyName}.getAll`, policyType)
+      .then((data: any) => { setItems(data.items.result); console.log(data.items.result); });
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -166,6 +182,7 @@ export function PreferencesTableWidget({
                       <TableRow
                         key={index}
                         onClick={() => handleRowClick(item)}
+                        onPointerOver={() => setCurrentItem(item) }
                       >
 
                         {getCellForPolicyItem(policyName, item.data, index).map((cell, cellIndex) => (
@@ -192,11 +209,11 @@ export function PreferencesTableWidget({
               <ContextMenuItem inset>
                 Edit Item
               </ContextMenuItem>
-              <ContextMenuItem inset>
+              <ContextMenuItem inset onClick={removeItem}>
                 Remove Item
               </ContextMenuItem>
               <ContextMenuSeparator />
-              <ContextMenuItem inset>
+              <ContextMenuItem inset onClick={openHelpUrl}>
                 Help
               </ContextMenuItem>
             </ContextMenuContent>
@@ -219,7 +236,7 @@ export function PreferencesTableWidget({
           </div>
         </div>
       </div>
-    <PreferencesDialog currentItem={currentItem} preferencesType={policyName} open={isOpen} onOpenChange={setIsOpen} />
+    <PreferencesDialog currentItem={currentItem.data} preferencesType={policyName} open={isOpen} onOpenChange={setIsOpen} />
     </div>
   )
 }
