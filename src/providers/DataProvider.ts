@@ -161,6 +161,7 @@ export class DataProvider implements IDataProvider {
    */
   public async delete(
     method: string,
+    policyType: number,
     params: DeleteParams
   ): Promise<DeleteResult> {
     try {
@@ -175,7 +176,7 @@ export class DataProvider implements IDataProvider {
         body: JSON.stringify({
           jsonrpc: "2.0",
           method: method,
-          params: { id: id },
+          params: { id: id, policyType: policyType, policyId: "123" },
           id: ++DataProvider.operation_id
         })
       });

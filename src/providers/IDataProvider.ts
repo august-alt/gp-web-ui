@@ -57,6 +57,7 @@ export type IDataProvider = {
 
     delete: (
         method: string,
+        policyType: number,
         params: DeleteParams
     ) => Promise<DeleteResult>;
 }
