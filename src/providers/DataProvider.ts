@@ -88,6 +88,7 @@ export class DataProvider implements IDataProvider {
    */
   public async create(
     method: string,
+    policyType: number,
     params: CreateParams,
   ): Promise<CreateResult> {
     try {
@@ -97,7 +98,7 @@ export class DataProvider implements IDataProvider {
         body: JSON.stringify({
           jsonrpc: "2.0",
           method: method,
-          params: { ...params.data },
+          params: { data: params.data, policyType: policyType, policyId: "123" },
           id: ++DataProvider.operation_id
         })
       });
@@ -122,6 +123,7 @@ export class DataProvider implements IDataProvider {
    */
   public async update(
     method: string,
+    policyType: number,
     params: UpdateParams,
   ): Promise<UpdateResult> {
     try {
@@ -136,7 +138,7 @@ export class DataProvider implements IDataProvider {
         body: JSON.stringify({
           jsonrpc: "2.0",
           method: method,
-          params: { id: id, ...params.data },
+          params: { id: id, data: params.data, policyType: policyType, policyId: "123" },
           id: ++DataProvider.operation_id
         })
       });

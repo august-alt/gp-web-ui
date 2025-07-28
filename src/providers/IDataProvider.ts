@@ -47,11 +47,13 @@ export type IDataProvider = {
 
     create: (
         method: string,
+        policyType: number,
         params: CreateParams,
     ) => Promise<CreateResult>;
 
     update: (
         method: string,
+        policyType: number,
         params: UpdateParams,
     ) => Promise<UpdateResult>;
 
