@@ -1,3 +1,5 @@
+import { DataProvider } from "@/providers/DataProvider";
+import { adjustPolicyName } from "./Helpers";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
@@ -13,13 +15,24 @@ import { VariablesWidget } from "@/components/dashboard/preferences/VariablesWid
 
 interface PreferencesDialogProps {
     preferencesType?: string
+    policyType: number
     open?: boolean
     onOpenChange?: (open: boolean) => void
     currentItem: any
 }
 
-export function PreferencesDialog({ preferencesType, open = false, onOpenChange = () => {}, currentItem }: PreferencesDialogProps) {
-  return (
+export function PreferencesDialog({ preferencesType, policyType, open = false, onOpenChange = () => {}, currentItem }: PreferencesDialogProps) {
+    const submitItem = () => {
+        const dataProvider = new DataProvider();
+        const currentPolicyName = adjustPolicyName(preferencesType || '');
+
+        console.log(currentItem);
+
+        dataProvider.update(`gpservice.basealt.ru.${currentPolicyName}.update`, policyType, currentItem)
+          .then(() => {})
+          .catch((error) => { console.log(error); });
+    };
+    return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] max-h-[92vh] overflow-y-auto">
         <DialogHeader>
@@ -86,7 +99,7 @@ export function PreferencesDialog({ preferencesType, open = false, onOpenChange 
 
           <div className="flex justify-end space-x-2">
           <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
-          <Button onClick={() => onOpenChange(false)}>OK</Button>
+          <Button onClick={() => { submitItem(); onOpenChange(false); }}>OK</Button>
         </div>
       </DialogContent>
     </Dialog>
