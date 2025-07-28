@@ -41,42 +41,42 @@ export function PreferencesDialog({ preferencesType, open = false, onOpenChange 
 
           {preferencesType === "Drive Maps" && (
             <TabsContent value="drive-maps" className="space-y-4">
-              <DrivesWidget sourceItem={currentItem}/>
+              <DrivesWidget sourceItem={currentItem?.data}/>
             </TabsContent>
           )}
           {preferencesType === "Files" && (
             <TabsContent value="files" className="space-y-4">
-              <FilesWidget sourceItem={currentItem}/>
+              <FilesWidget sourceItem={currentItem?.data}/>
             </TabsContent>
           )}
           {preferencesType === "Folders" && (
             <TabsContent value="folders" className="space-y-4">
-              <FoldersWidget sourceItem={currentItem}/>
+              <FoldersWidget sourceItem={currentItem?.data}/>
             </TabsContent>
           )}
           {preferencesType === "Ini Files" && (
             <TabsContent value="ini" className="space-y-4">
-              <IniWidget sourceItem={currentItem}/>
+              <IniWidget sourceItem={currentItem?.data}/>
             </TabsContent>
           )}
           {preferencesType === "Registry" && (
             <TabsContent value="registry" className="space-y-4">
-              <RegistryWidget sourceItem={currentItem}/>
+              <RegistryWidget sourceItem={currentItem?.data}/>
             </TabsContent>
           )}
           {preferencesType === "Network Shares" && (
             <TabsContent value="shares" className="space-y-4">
-              <SharesWidget sourceItem={currentItem}/>
+              <SharesWidget sourceItem={currentItem?.data}/>
             </TabsContent>
           )}
           {preferencesType === "Shortcuts" && (
             <TabsContent value="shortcuts" className="space-y-4">
-              <ShortcutsWidget sourceItem={currentItem}/>
+              <ShortcutsWidget sourceItem={currentItem?.data}/>
             </TabsContent>
           )}
           {preferencesType === "Environment" && (
             <TabsContent value="variables" className="space-y-4">
-              <VariablesWidget sourceItem={currentItem}/>
+              <VariablesWidget sourceItem={currentItem?.data}/>
             </TabsContent>
           )}
           <TabsContent value="common" className="space-y-4">

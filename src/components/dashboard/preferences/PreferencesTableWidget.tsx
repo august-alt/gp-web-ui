@@ -216,7 +216,7 @@ export function PreferencesTableWidget({
           </div>
         </div>
       </div>
-    <PreferencesDialog currentItem={currentItem.data} preferencesType={policyName} open={isOpen} onOpenChange={setIsOpen} />
+    <PreferencesDialog currentItem={currentItem} preferencesType={policyName} open={isOpen} onOpenChange={setIsOpen} />
     </div>
   )
 }
