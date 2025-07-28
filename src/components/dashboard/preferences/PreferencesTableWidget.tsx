@@ -6,7 +6,7 @@ import { useState, useEffect } from "react"
 
 import { DataProvider } from "@/providers/DataProvider"
 import { PreferencesDialog } from "@/components/dashboard/preferences/PreferencesDialog"
-import { convertIndex, getBasename } from './Helpers'
+import { convertIndex, getBasename, adjustPolicyName } from './Helpers'
 import type { IEnvironmentInterface } from "./IEnvironmentInterface"
 import type { IDriveMapInterface } from "./IDriveMapInterface"
 import type { IFileInterface } from "./IFileInterface"
@@ -99,30 +99,6 @@ export function PreferencesTableWidget({
     }
   };
 
-  const adjustPolicyName = (policyName: string): string => {
-    switch(policyName.toLowerCase())
-    {
-      case "environment":
-        return "variables";
-      case "drive maps":
-        return "drives";
-      case "files":
-        return "files";
-      case "folders":
-        return "folders";
-      case "ini files":
-        return "inis";
-      case "network shares":
-        return "shares";
-      case "registry":
-        return "registry";
-      case "shortcuts":
-        return "shortcuts";
-    }
-
-    return "";
-  }
-
   useEffect(() => {
     const dataProvider = new DataProvider();
 
@@ -151,6 +127,10 @@ export function PreferencesTableWidget({
 
     dataProvider.getList(`gpservice.basealt.ru.${currentPolicyName}.getAll`, policyType)
       .then((data: any) => { setItems(data.items.result); console.log(data.items.result); });
+  }
+
+  const editItem = () => {
+    setIsOpen(true);
   }
 
   return (
@@ -206,7 +186,7 @@ export function PreferencesTableWidget({
               <ContextMenuItem inset>
                 New
               </ContextMenuItem>
-              <ContextMenuItem inset>
+              <ContextMenuItem inset onClick={editItem}>
                 Edit Item
               </ContextMenuItem>
               <ContextMenuItem inset onClick={removeItem}>
