@@ -6,27 +6,36 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { type IRegistryInterface } from './IRegistryInterface'
-import { convertIndex } from './Helpers'
+import { convertAction, convertIndex } from './Helpers'
 
 interface RegistryWidgetProps {
   sourceItem: IRegistryInterface
+  updateData: (item: IRegistryInterface) => void
 }
 
-export const RegistryWidget = ({sourceItem}:RegistryWidgetProps) => {
-  const [action, setAction] = useState(convertIndex(sourceItem?.action || 0))
-  const [hive, setHive] = useState(sourceItem.hive || "HKEY_CURRENT_USER")
-  const [keyPath, setKeyPath] = useState(sourceItem.key || "")
-  const [defaultValue, setDefaultValue] = useState(sourceItem.default)
-  const [valueName, setValueName] = useState(sourceItem.name || "")
-  const [valueType, setValueType] = useState(sourceItem.type || "REG_SZ")
-  const [valueData, setValueData] = useState(sourceItem.value || "")
+export const RegistryWidget = ({sourceItem, updateData = () => {} }:RegistryWidgetProps) => {
+  const [registryData, setRegistryData] = useState<IRegistryInterface>(sourceItem);
+
+  const handleChange = (event: any) => {
+    const { name, value } = event.target;
+
+    setRegistryData({
+      ...registryData,
+      [name]: value
+    });
+
+    updateData({
+      ...registryData,
+      [name]: value
+    });
+  };
 
   return (
     <div className="flex flex-col gap-4 p-4">
       {/* Action Section */}
       <div className="flex items-center gap-2">
         <Label htmlFor="action" className="whitespace-nowrap">Action:</Label>
-        <Select value={action} onValueChange={setAction}>
+        <Select value={convertIndex(registryData?.action || 0)} name="action" onValueChange={(value) => { handleChange({target: { name: "action", value: convertAction(value) }}) } }>
           <SelectTrigger id="action" className="w-[150px]">
             <SelectValue placeholder="Select action" />
           </SelectTrigger>
@@ -45,7 +54,7 @@ export const RegistryWidget = ({sourceItem}:RegistryWidgetProps) => {
       <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-1">
           <Label htmlFor="hive" className="whitespace-nowrap">Hive:</Label>
-          <Select value={hive} onValueChange={setHive}>
+          <Select value={registryData?.hive || "HKEY_CURRENT_USER"} name="hive" onValueChange={(value) => { handleChange({target: { name: "hive", value: value }}) } }>
             <SelectTrigger id="hive" className="w-full">
               <SelectValue placeholder="Select hive" />
             </SelectTrigger>
@@ -62,8 +71,9 @@ export const RegistryWidget = ({sourceItem}:RegistryWidgetProps) => {
           <Label htmlFor="keyPath" className="whitespace-nowrap">Key Path:</Label>
           <Input
             id="keyPath"
-            value={keyPath}
-            onChange={(e) => setKeyPath(e.target.value)}
+            name="key"
+            value={registryData?.key || ""}
+            onChange={handleChange}
             placeholder="Enter key path"
           />
         </div>
@@ -78,14 +88,16 @@ export const RegistryWidget = ({sourceItem}:RegistryWidgetProps) => {
           <div className="flex items-center gap-2">
             <Checkbox
               id="defaultValue"
-              checked={defaultValue}
-              onCheckedChange={(checked) => setDefaultValue(checked as boolean)}
+              name="default"
+              checked={registryData?.default}
+              onCheckedChange={(value) => { handleChange({target: { name: "default", value: value }}) }}
             />
             <Label htmlFor="defaultValue">Default</Label>
           </div>
           <Input
-            value={valueName}
-            onChange={(e) => setValueName(e.target.value)}
+            name="name"
+            value={registryData?.name || ""}
+            onChange={handleChange}
             placeholder="Enter value name"
           />
         </CardContent>
@@ -96,7 +108,7 @@ export const RegistryWidget = ({sourceItem}:RegistryWidgetProps) => {
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-1">
             <Label htmlFor="valueType" className="whitespace-nowrap">Value type:</Label>
-            <Select value={valueType} onValueChange={setValueType}>
+            <Select value={registryData?.type || "REG_SZ"} name="type" onValueChange={(value) => { handleChange({target: { name: "type", value: value }}) } }>
               <SelectTrigger id="valueType" className="w-full">
                 <SelectValue placeholder="Select value type" />
               </SelectTrigger>
@@ -114,8 +126,9 @@ export const RegistryWidget = ({sourceItem}:RegistryWidgetProps) => {
             <Label htmlFor="valueData" className="whitespace-nowrap">Value data:</Label>
             <Input
               id="valueData"
-              value={valueData}
-              onChange={(e) => setValueData(e.target.value)}
+              name="value"
+              value={registryData?.value || ""}
+              onChange={handleChange}
               placeholder="Enter value data"
             />
           </div>

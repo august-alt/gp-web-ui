@@ -26,12 +26,15 @@ export function PreferencesDialog({ preferencesType, policyType, open = false, o
         const dataProvider = new DataProvider();
         const currentPolicyName = adjustPolicyName(preferencesType || '');
 
-        console.log(currentItem);
-
         dataProvider.update(`gpservice.basealt.ru.${currentPolicyName}.update`, policyType, currentItem)
           .then(() => {})
           .catch((error) => { console.log(error); });
     };
+
+    const updateData = (item: any) => {
+      currentItem.data = item;
+    }
+
     return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] max-h-[92vh] overflow-y-auto">
@@ -74,7 +77,7 @@ export function PreferencesDialog({ preferencesType, policyType, open = false, o
           )}
           {preferencesType === "Registry" && (
             <TabsContent value="registry" className="space-y-4">
-              <RegistryWidget sourceItem={currentItem?.data}/>
+              <RegistryWidget sourceItem={currentItem?.data} updateData={updateData}/>
             </TabsContent>
           )}
           {preferencesType === "Network Shares" && (
