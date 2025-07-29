@@ -72,7 +72,7 @@ export function PreferencesDialog({ preferencesType, policyType, open = false, o
           )}
           {preferencesType === "Ini Files" && (
             <TabsContent value="ini" className="space-y-4">
-              <IniWidget sourceItem={currentItem?.data}/>
+              <IniWidget sourceItem={currentItem?.data} updateData={updateData}/>
             </TabsContent>
           )}
           {preferencesType === "Registry" && (

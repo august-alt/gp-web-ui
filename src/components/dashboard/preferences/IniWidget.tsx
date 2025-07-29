@@ -5,14 +5,27 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { type IIniFileInterface } from './IIniFileInterface'
-import { convertIndex } from './Helpers'
+import { convertIndex, convertAction } from './Helpers'
 
 interface IniWidgetProps {
   sourceItem: IIniFileInterface
+  updateData: (item: IIniFileInterface) => void
 }
 
-export function IniWidget({sourceItem}:IniWidgetProps) {
-  const [action, setAction] = useState(convertIndex(sourceItem?.action || 0))
+export function IniWidget({sourceItem, updateData}:IniWidgetProps) {
+  const [iniData, setIniData] = useState<IIniFileInterface>(sourceItem)
+
+  const handleChange = (event: any) => {
+    const { name, value } = event.target;
+    setIniData({
+      ...iniData,
+      [name]: value
+    });
+    updateData({
+      ...iniData,
+      [name]: value
+    });
+  };
 
   return (
     <div className="space-y-4 p-4">
@@ -21,7 +34,7 @@ export function IniWidget({sourceItem}:IniWidgetProps) {
         <Label htmlFor="action" className="text-sm font-medium">
           Action:
         </Label>
-        <Select value={action} onValueChange={setAction}>
+        <Select value={convertIndex(iniData?.action || 0)} name="action" onValueChange={(value) => { handleChange({target: { name: "action", value: convertAction(value) }}) }}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Select action" />
           </SelectTrigger>
@@ -42,7 +55,7 @@ export function IniWidget({sourceItem}:IniWidgetProps) {
           File path
         </Label>
         <div className="col-span-2 flex gap-2">
-          <Input id="filePath" placeholder="Select file path" disabled={action === "Create"} />
+          <Input id="filePath" name="path" value={iniData?.path || ""} onChange={handleChange} placeholder="Select file path"/>
           <Button variant="outline" size="icon">
             ...
           </Button>
@@ -55,7 +68,7 @@ export function IniWidget({sourceItem}:IniWidgetProps) {
           Section Name
         </Label>
         <div className="col-span-2">
-          <Input id="section" placeholder="Section name" disabled={action === "Create"} />
+          <Input id="section" name="section" value={iniData?.section || ""} onChange={handleChange} placeholder="Section name" disabled={iniData?.path?.length === 0} />
         </div>
       </div>
 
@@ -65,7 +78,7 @@ export function IniWidget({sourceItem}:IniWidgetProps) {
           Property Name
         </Label>
         <div className="col-span-2">
-          <Input id="property" placeholder="Property name" disabled={action === "Create"} />
+          <Input id="property" name="property" value={iniData?.property || ""} onChange={handleChange} placeholder="Property name" disabled={iniData?.path?.length === 0 || iniData?.section?.length === 0} />
         </div>
       </div>
 
@@ -75,7 +88,7 @@ export function IniWidget({sourceItem}:IniWidgetProps) {
           Property Value
         </Label>
         <div className="col-span-2">
-          <Input id="value" placeholder="Property value" disabled={action === "Create"} />
+          <Input id="value" name="value" value={iniData?.value || ""} onChange={handleChange} placeholder="Property value" disabled={iniData?.path?.length === 0 || iniData?.section?.length === 0 || iniData?.property?.length === 0} />
         </div>
       </div>
     </div>
