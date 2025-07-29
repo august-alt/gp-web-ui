@@ -41,3 +41,18 @@ export const adjustPolicyName = (policyName: string): string => {
 
     return "";
   }
+
+export const convertAction = (action: string): number => {
+    switch (action) {
+        case "Create":
+            return 0;
+        case "Replace":
+            return 1;
+        case "Update":
+            return 2;
+        case "Delete":
+            return 3;
+        default:
+            return 0;
+    }
+}
