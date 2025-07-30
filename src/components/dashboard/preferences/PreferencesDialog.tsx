@@ -62,7 +62,7 @@ export function PreferencesDialog({ preferencesType, policyType, open = false, o
           )}
           {preferencesType === "Files" && (
             <TabsContent value="files" className="space-y-4">
-              <FilesWidget sourceItem={currentItem?.data}/>
+              <FilesWidget sourceItem={currentItem?.data} updateData={updateData}/>
             </TabsContent>
           )}
           {preferencesType === "Folders" && (
