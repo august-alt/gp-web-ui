@@ -1,16 +1,34 @@
+import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { type IEnvironmentInterface } from './IEnvironmentInterface'
-import { convertIndex } from './Helpers'
+import { convertIndex, convertAction } from './Helpers'
 
 interface ShortcutsWidgetProps {
   sourceItem: IEnvironmentInterface
+  updateData: (item: IEnvironmentInterface) => void
 }
 
-export function VariablesWidget({sourceItem}:ShortcutsWidgetProps) {
+export function VariablesWidget({sourceItem, updateData}:ShortcutsWidgetProps) {
+  const [varData, setVarData] = useState<IEnvironmentInterface>(sourceItem);
+
+  const handleChange = (event: any) => {
+    const { name, value } = event.target;
+
+    setVarData({
+      ...varData,
+      [name]: value
+    });
+
+    updateData({
+      ...varData,
+      [name]: value
+    });
+  };
+
   return (
     <div className="space-y-4">
       {/* Action ComboBox Section */}
@@ -18,15 +36,15 @@ export function VariablesWidget({sourceItem}:ShortcutsWidgetProps) {
         <Label htmlFor="action" className="whitespace-nowrap">
           Action:
         </Label>
-        <Select defaultValue="create">
+        <Select defaultValue="Create" value={convertIndex(varData?.action || 0)} name="action" onValueChange={(value) => { handleChange({target: { name: "action", value: convertAction(value) }}) } }>
           <SelectTrigger id="action" className="w-[180px]">
             <SelectValue placeholder="Select action" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="create">Create</SelectItem>
-            <SelectItem value="replace">Replace</SelectItem>
-            <SelectItem value="update">Update</SelectItem>
-            <SelectItem value="delete">Delete</SelectItem>
+            <SelectItem value="Create">Create</SelectItem>
+            <SelectItem value="Replace">Replace</SelectItem>
+            <SelectItem value="Update">Update</SelectItem>
+            <SelectItem value="Delete">Delete</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -56,14 +74,29 @@ export function VariablesWidget({sourceItem}:ShortcutsWidgetProps) {
           <Label htmlFor="name" className="text-right">
             Name:
           </Label>
-          <Input id="name" defaultValue="VariableName" className="col-span-2" />
+          <Input
+            id="name"
+            defaultValue="VariableName"
+            className="col-span-2"
+            name="name"
+            value={varData?.name || ""}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="grid grid-cols-3 items-center gap-4">
           <Label htmlFor="value" className="text-right">
             Value:
           </Label>
-          <Input id="value" defaultValue="VariableValue" className="col-span-2" />
+          <Input
+            id="value"
+            defaultValue="VariableValue"
+            className="col-span-2"
+            name="value"
+            value={varData?.value || ""}
+            disabled={varData?.action == 3}
+            onChange={handleChange}
+          />
         </div>
       </div>
 

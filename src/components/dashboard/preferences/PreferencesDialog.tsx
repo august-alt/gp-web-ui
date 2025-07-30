@@ -92,7 +92,7 @@ export function PreferencesDialog({ preferencesType, policyType, open = false, o
           )}
           {preferencesType === "Environment" && (
             <TabsContent value="variables" className="space-y-4">
-              <VariablesWidget sourceItem={currentItem?.data}/>
+              <VariablesWidget sourceItem={currentItem?.data} updateData={updateData}/>
             </TabsContent>
           )}
           <TabsContent value="common" className="space-y-4">
