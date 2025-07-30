@@ -67,7 +67,7 @@ export function PreferencesDialog({ preferencesType, policyType, open = false, o
           )}
           {preferencesType === "Folders" && (
             <TabsContent value="folders" className="space-y-4">
-              <FoldersWidget sourceItem={currentItem?.data}/>
+              <FoldersWidget sourceItem={currentItem?.data} updateData={updateData}/>
             </TabsContent>
           )}
           {preferencesType === "Ini Files" && (
