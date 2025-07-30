@@ -55,7 +55,19 @@ export function VariablesWidget({sourceItem, updateData}:ShortcutsWidgetProps) {
           <CardTitle className="text-sm font-medium">Variable Type</CardTitle>
         </CardHeader>
         <CardContent className="space-y-1">
-          <RadioGroup defaultValue="user" className="flex flex-col space-y-1">
+          <RadioGroup
+            defaultValue="user"
+            className="flex flex-col space-y-1"
+            value={ varData?.user ? "user" : varData?.system ? "system" : "user" }
+            onChange={
+              (value) => {
+                let boolValue = (value as any as string === "user");
+
+                handleChange({target: { name: "user", value: boolValue }})
+                handleChange({target: { name: "system", value: !boolValue }})
+              }
+            }
+            >
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="user" id="user-variable" />
               <Label htmlFor="user-variable">User Variable</Label>
