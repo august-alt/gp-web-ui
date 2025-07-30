@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -58,10 +59,11 @@ export function VariablesWidget({sourceItem, updateData}:ShortcutsWidgetProps) {
           <RadioGroup
             defaultValue="user"
             className="flex flex-col space-y-1"
+            name="system"
             value={ varData?.user ? "user" : varData?.system ? "system" : "user" }
-            onChange={
-              (value) => {
-                let boolValue = (value as any as string === "user");
+            onValueChange={
+              (value: string) => {
+                const boolValue = value === "user";
 
                 handleChange({target: { name: "user", value: boolValue }})
                 handleChange({target: { name: "system", value: !boolValue }})
@@ -108,6 +110,32 @@ export function VariablesWidget({sourceItem, updateData}:ShortcutsWidgetProps) {
             value={varData?.value || ""}
             disabled={varData?.action == 3}
             onChange={handleChange}
+          />
+        </div>
+      </div>
+
+      {/* Value Checkboxes (System only) */}
+      <div className="flex flex-rows-3 items-center gap-4 mt-2">
+        <Label htmlFor="partial" className="text-right">
+          Partial:
+        </Label>
+        <div className="col-span-2 flex items-center space-x-4">
+          <Checkbox
+            id="partial"
+            name="partial"
+            checked={varData?.partial || false}
+            onCheckedChange={(checked: boolean) => handleChange({ target: { name: "partial", value: checked } })}
+            disabled={varData?.system != true}
+          />
+          <Label htmlFor="path" className="whitespace-nowrap">
+            PATH:
+          </Label>
+          <Checkbox
+            id="path"
+            name="path"
+            checked={varData?.name === "PATH" || false}
+            onCheckedChange={(checked: boolean) => handleChange({ target: { name: "name", value: checked ? "PATH" : "" } })}
+            disabled={varData?.system != true}
           />
         </div>
       </div>
