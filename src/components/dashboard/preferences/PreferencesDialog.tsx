@@ -57,7 +57,7 @@ export function PreferencesDialog({ preferencesType, policyType, open = false, o
 
           {preferencesType === "Drive Maps" && (
             <TabsContent value="drive-maps" className="space-y-4">
-              <DrivesWidget sourceItem={currentItem?.data}/>
+              <DrivesWidget sourceItem={currentItem?.data} updateData={updateData}/>
             </TabsContent>
           )}
           {preferencesType === "Files" && (

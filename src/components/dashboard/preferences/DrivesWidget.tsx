@@ -5,17 +5,58 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import type { IDriveMapInterface } from './IDriveMapInterface'
-import { convertIndex } from './Helpers'
+import { convertIndex, convertAction } from './Helpers'
 
 interface DrivesWidgetProps {
   sourceItem: IDriveMapInterface
+  updateData: (item: IDriveMapInterface) => void
 }
 
-export const DrivesWidget = ({ sourceItem }: DrivesWidgetProps) => {
-  const [action, setAction] = useState(convertIndex(sourceItem?.action || 0))
-  const [thisDrive, setThisDrive] = useState(sourceItem.thisDrive?.toString() || 'noChange')
-  const [allDrives, setAllDrives] = useState(sourceItem.allDrives?.toString() || 'noChange')
-  const [driveLetter, setDriveLetter] = useState(sourceItem.letter || 'A:')
+export const DrivesWidget = ({ sourceItem, updateData }: DrivesWidgetProps) => {
+  const [driveData, setDriveData] = useState<IDriveMapInterface>({
+    action: sourceItem?.action || 0,
+    thisDrive: sourceItem?.thisDrive || 0,
+    allDrives: sourceItem?.allDrives || 0,
+    letter: sourceItem.letter || 'A:'
+  });
+
+  const handleChange = (event: any) => {
+    const { name, value } = event.target;
+
+    setDriveData({
+      ...driveData,
+      [name]: value
+    });
+
+    updateData({
+      ...driveData,
+      [name]: value
+    });
+  };
+
+  const convertDriveRadioState = (index: number) => {
+    switch (index)
+    {
+      case 1:
+        return "HIDE";
+      case 2:
+        return "SHOW";
+    }
+
+    return "NOCHANGE";
+  }
+
+  const convertDriveRadioIndex = (state: string) => {
+    switch (state)
+    {
+      case "HIDE":
+        return 1;
+      case "SHOW":
+        return 2;
+    }
+
+    return 0;
+  }
 
   return (
     <Card className="p-4 space-y-4">
@@ -25,8 +66,11 @@ export const DrivesWidget = ({ sourceItem }: DrivesWidgetProps) => {
           Action:
         </Label>
         <Select
-          value={action}
-          onValueChange={setAction}
+          value={convertIndex(driveData?.action || 0)}
+          name="action"
+          onValueChange={(value) => {
+            handleChange({ target: { name: "action", value: convertAction(value) } });
+          }}
         >
           <SelectTrigger className="w-[180px]" id="action">
             <SelectValue placeholder="Select action" />
@@ -50,8 +94,9 @@ export const DrivesWidget = ({ sourceItem }: DrivesWidgetProps) => {
         <CardContent className="space-y-4">
           <div className="flex gap-4">
             <RadioGroup
-              value={driveLetter}
-              onValueChange={setDriveLetter}
+              value={driveData?.useLetter ? "existing" : "firstAvailable"}
+              name="letter"
+              onValueChange={(value) => handleChange({ target: { name: "useLetter", value: (value.localeCompare("existing") === 0)} })}
               className="space-y-2"
             >
               <div className="flex items-center space-x-2">
@@ -65,8 +110,7 @@ export const DrivesWidget = ({ sourceItem }: DrivesWidgetProps) => {
             </RadioGroup>
 
             <Select
-              value={driveLetter === 'existing' ? 'A:' : 'Z:'}
-              disabled={driveLetter === 'firstAvailable'}
+              value={driveData?.letter || "A:"}
             >
               <SelectTrigger>
                 <SelectValue />
@@ -93,20 +137,21 @@ export const DrivesWidget = ({ sourceItem }: DrivesWidgetProps) => {
           </CardHeader>
           <CardContent>
             <RadioGroup
-              value={thisDrive}
-              onValueChange={setThisDrive}
+              value={convertDriveRadioState(driveData?.thisDrive || 0)}
+              name="thisDrive"
+              onValueChange={(value) => handleChange({ target: { name: "thisDrive", value: convertDriveRadioIndex(value) } })}
               className="space-y-2"
             >
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="noChange" id="this-no-change" defaultChecked />
+                <RadioGroupItem value="NOCHANGE" id="this-no-change" defaultChecked />
                 <Label htmlFor="this-no-change">No change</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="hide" id="this-hide" />
+                <RadioGroupItem value="HIDE" id="this-hide" />
                 <Label htmlFor="this-hide">Hide this drive</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="show" id="this-show" />
+                <RadioGroupItem value="SHOW" id="this-show" />
                 <Label htmlFor="this-show">Show this drive</Label>
               </div>
             </RadioGroup>
@@ -119,20 +164,21 @@ export const DrivesWidget = ({ sourceItem }: DrivesWidgetProps) => {
           </CardHeader>
           <CardContent>
             <RadioGroup
-              value={allDrives}
-              onValueChange={setAllDrives}
+              value={convertDriveRadioState(driveData?.allDrives || 0)}
+              name="allDrives"
+              onValueChange={(value) => handleChange({ target: { name: "allDrives", value: convertDriveRadioIndex(value) } })}
               className="space-y-2"
             >
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="noChange" id="all-no-change" defaultChecked />
+                <RadioGroupItem value="NOCHANGE" id="all-no-change" defaultChecked />
                 <Label htmlFor="all-no-change">No change</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="hide" id="all-hide" />
+                <RadioGroupItem value="HIDE" id="all-hide" />
                 <Label htmlFor="all-hide">Hide all drive</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="show" id="all-show" />
+                <RadioGroupItem value="SHOW" id="all-show" />
                 <Label htmlFor="all-show">Show all drive</Label>
               </div>
             </RadioGroup>
