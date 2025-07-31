@@ -12,7 +12,7 @@ interface SharesyWidgetProps {
   sourceItem: IShareInterface
 }
 
-export function SharesWidget({sourceItem}:SharesyWidgetProps) {
+export function SharesWidget({sourceItem}: SharesyWidgetProps) {
   const [shareData, setShareData] = useState<IShareInterface>({
     action: sourceItem?.action || 0,
     name: sourceItem.name || "",
@@ -26,6 +26,14 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
     accessBasedEnumeration: sourceItem.accessBasedEnumeration || "noChange",
   });
 
+  const handleChange = (event: any) => {
+    const { name, value } = event.target;
+    setShareData({
+      ...shareData,
+      [name]: value
+    });
+  };
+
   return (
     <div className="space-y-6 p-4">
       {/* Action Section */}
@@ -34,12 +42,10 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
           Action:
         </Label>
         <Select
+          name="action"
           value={convertIndex(shareData.action || 0)}
           onValueChange={(value) => {
-            setShareData({
-              ...shareData,
-              action: convertAction(value),
-            });
+            handleChange({ target: { name: "action", value: convertAction(value) } });
           }}
         >
           <SelectTrigger id="action" className="w-[180px]">
@@ -61,8 +67,9 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
           <div className="flex space-x-2">
             <Input
               id="share-name"
+              name="name"
               value={shareData.name}
-              onChange={(e) => setShareData({ ...shareData, name: e.target.value })}
+              onChange={handleChange}
               className="flex-1"
             />
             <Button variant="outline" disabled>...</Button>
@@ -74,8 +81,9 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
           <div className="flex space-x-2">
             <Input
               id="folder-path"
+              name="path"
               value={shareData.path}
-              onChange={(e) => setShareData({ ...shareData, path: e.target.value })}
+              onChange={handleChange}
               className="flex-1"
             />
             <Button variant="outline">...</Button>
@@ -86,8 +94,9 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
           <Label htmlFor="comment" className="mb-1">Comment:</Label>
           <Input
             id="comment"
+            name="comment"
             value={shareData.comment}
-            onChange={(e) => setShareData({ ...shareData, comment: e.target.value })}
+            onChange={handleChange}
           />
         </div>
       </div>
@@ -102,8 +111,9 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
           <div className="flex items-center space-x-2">
             <Checkbox
               id="update-regular"
+              name="allRegular"
               checked={shareData.allRegular}
-              onCheckedChange={(checked) => setShareData({ ...shareData, allRegular: checked as boolean })}
+              onCheckedChange={(checked) => handleChange({ target: { name: "allRegular", value: checked } })}
             />
             <Label htmlFor="update-regular">Update all regular shares</Label>
           </div>
@@ -111,8 +121,9 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
           <div className="flex items-center space-x-2">
             <Checkbox
               id="update-hidden"
+              name="allHidden"
               checked={shareData.allHidden}
-              onCheckedChange={(checked) => setShareData({ ...shareData, allHidden: checked as boolean })}
+              onCheckedChange={(checked) => handleChange({ target: { name: "allHidden", value: checked } })}
             />
             <Label htmlFor="update-hidden" className="whitespace-pre-wrap">
               Update all hidden non-administrative shares
@@ -122,8 +133,9 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
           <div className="flex items-center space-x-2">
             <Checkbox
               id="update-admin"
+              name="allAdminDrive"
               checked={shareData.allAdminDrive}
-              onCheckedChange={(checked) => setShareData({ ...shareData, allAdminDrive: checked as boolean })}
+              onCheckedChange={(checked) => handleChange({ target: { name: "allAdminDrive", value: checked } })}
             />
             <Label htmlFor="update-admin" className="whitespace-pre-wrap">
               Update all administrative drive-letter shares
@@ -136,8 +148,9 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
       <div className="space-y-4 border-t pt-4">
         <Label className="font-medium">User limit:</Label>
         <RadioGroup
+          name="limitUsers"
           value={shareData.limitUsers}
-          onValueChange={(value) => setShareData({ ...shareData, limitUsers: value })}
+          onValueChange={(value) => handleChange({ target: { name: "limitUsers", value } })}
           className="space-y-3"
         >
           <div className="flex items-center space-x-2">
@@ -159,8 +172,9 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
               type="number"
               min={0}
               max={65535}
+              name="userLimit"
               value={shareData.userLimit}
-              onChange={(e) => setShareData({ ...shareData, userLimit: parseInt(e.target.value) })}
+              onChange={(e) => handleChange({ target: { name: "userLimit", value: parseInt(e.target.value) } })}
               className="w-20"
             />
           </div>
@@ -171,8 +185,9 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
       <div className="space-y-4 border-t pt-4">
         <Label className="font-medium">Access-based Enumeration:</Label>
         <RadioGroup
+          name="accessBasedEnumeration"
           value={shareData.accessBasedEnumeration}
-          onValueChange={(value) => setShareData({ ...shareData, accessBasedEnumeration: value })}
+          onValueChange={(value) => handleChange({ target: { name: "accessBasedEnumeration", value } })}
           className="space-y-3"
         >
           <div className="flex items-center space-x-2">
