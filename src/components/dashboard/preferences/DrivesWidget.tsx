@@ -86,6 +86,11 @@ export const DrivesWidget = ({ sourceItem, updateData }: DrivesWidgetProps) => {
 
       <Separator />
 
+      {/* Location Section */}
+      <Card>
+        {/* TODO: Implement. */}
+      </Card>
+
       {/* Drive Letter Section */}
       <Card>
         <CardHeader>
