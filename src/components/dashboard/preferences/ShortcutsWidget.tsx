@@ -169,7 +169,6 @@ export function ShortcutsWidget({ sourceItem }: ShortcutsWidgetProps) {
           <Label className="text-sm font-medium">Icon index:</Label>
           <Input
             placeholder="Index"
-            disabled
             name="iconIndex"
             value={shortcutsData.iconIndex}
             onChange={handleChange}
