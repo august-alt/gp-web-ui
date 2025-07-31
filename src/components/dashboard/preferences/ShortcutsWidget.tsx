@@ -8,14 +8,21 @@ import { convertIndex, convertAction } from './Helpers'
 
 interface ShortcutsWidgetProps {
   sourceItem: IShortcutInterface
+  updateData: (item: IShortcutInterface) => void
 }
 
-export function ShortcutsWidget({ sourceItem }: ShortcutsWidgetProps) {
+export function ShortcutsWidget({ sourceItem, updateData }: ShortcutsWidgetProps) {
   const [shortcutsData, setShortcutsData] = useState<IShortcutInterface>(sourceItem);
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
+
     setShortcutsData({
+      ...shortcutsData,
+      [name]: value
+    });
+
+    updateData({
       ...shortcutsData,
       [name]: value
     });

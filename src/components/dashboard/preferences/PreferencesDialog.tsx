@@ -87,7 +87,7 @@ export function PreferencesDialog({ preferencesType, policyType, open = false, o
           )}
           {preferencesType === "Shortcuts" && (
             <TabsContent value="shortcuts" className="space-y-4">
-              <ShortcutsWidget sourceItem={currentItem?.data}/>
+              <ShortcutsWidget sourceItem={currentItem?.data} updateData={updateData}/>
             </TabsContent>
           )}
           {preferencesType === "Environment" && (
