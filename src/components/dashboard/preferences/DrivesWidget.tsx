@@ -145,7 +145,7 @@ export const DrivesWidget = ({ sourceItem, updateData }: DrivesWidgetProps) => {
           <div className="flex gap-4">
             <RadioGroup
               value={driveData?.useLetter ? "existing" : "firstAvailable"}
-              name="letter"
+              name="useLetter"
               onValueChange={(value) => handleChange({ target: { name: "useLetter", value: (value.localeCompare("existing") === 0)} })}
               className="space-y-2"
             >
@@ -161,6 +161,8 @@ export const DrivesWidget = ({ sourceItem, updateData }: DrivesWidgetProps) => {
 
             <Select
               value={driveData?.letter || "A:"}
+              name="letter"
+              onValueChange={(value) => handleChange({ target: { name: "letter", value } })}
             >
               <SelectTrigger>
                 <SelectValue />
