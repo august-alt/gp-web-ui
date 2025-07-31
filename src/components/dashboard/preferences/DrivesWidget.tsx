@@ -4,6 +4,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+import { Input } from "@/components/ui/input"
+import { Checkbox } from "@/components/ui/checkbox"
 import type { IDriveMapInterface } from './IDriveMapInterface'
 import { convertIndex, convertAction } from './Helpers'
 
@@ -88,13 +90,31 @@ export const DrivesWidget = ({ sourceItem, updateData }: DrivesWidgetProps) => {
 
       {/* Location Section */}
       <Card>
-        {/* TODO: Implement. */}
+        <CardHeader>
+          <CardTitle>Location</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div  className="space-y-2">
+            <div className="flex gap-4">
+              <Label htmlFor="location">Location</Label>
+              <Input id="location" type="text" placeholder="Enter location" />
+            </div>
+            <div className="flex gap-4">
+              <div className="flex items-center space-x-2">
+                <Label htmlFor="reconnect">Reconnect: </Label>
+                <Checkbox id="reconnect" />
+              </div>
+              <Label htmlFor="labelAs" className='whitespace-nowrap'>Label as:</Label>
+              <Input id="labelAs" type="text" placeholder="Enter label" />
+            </div>
+          </div>
+        </CardContent>
       </Card>
 
       {/* Drive Letter Section */}
       <Card>
         <CardHeader>
-          <CardTitle>DriveLetter</CardTitle>
+          <CardTitle>Drive letter</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex gap-4">
