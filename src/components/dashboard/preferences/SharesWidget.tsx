@@ -68,8 +68,8 @@ export function SharesWidget({sourceItem, updateData}: SharesyWidgetProps) {
       </div>
 
       {/* Share Details Section */}
-      <div className="grid grid-cols-3 gap-4 border p-4 rounded-lg">
-        <div className="col-span-1">
+      <div className="space-y-4 border p-4 rounded-lg">
+        <div>
           <Label htmlFor="share-name" className="mb-1">Share name:</Label>
           <div className="flex space-x-2">
             <Input
@@ -82,8 +82,7 @@ export function SharesWidget({sourceItem, updateData}: SharesyWidgetProps) {
             <Button variant="outline" disabled>...</Button>
           </div>
         </div>
-
-        <div className="col-span-1">
+        <div>
           <Label htmlFor="folder-path" className="mb-1">Folder path:</Label>
           <div className="flex space-x-2">
             <Input
@@ -96,14 +95,14 @@ export function SharesWidget({sourceItem, updateData}: SharesyWidgetProps) {
             <Button variant="outline">...</Button>
           </div>
         </div>
-
-        <div className="col-span-1">
+        <div>
           <Label htmlFor="comment" className="mb-1">Comment:</Label>
           <Input
             id="comment"
             name="comment"
             value={shareData.comment}
             onChange={handleChange}
+            className="w-full"
           />
         </div>
       </div>
