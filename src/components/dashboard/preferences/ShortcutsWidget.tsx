@@ -37,10 +37,10 @@ export function ShortcutsWidget({ sourceItem }: ShortcutsWidgetProps) {
             <SelectValue placeholder="Create" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="create">Create</SelectItem>
-            <SelectItem value="replace">Replace</SelectItem>
-            <SelectItem value="update">Update</SelectItem>
-            <SelectItem value="delete">Delete</SelectItem>
+            <SelectItem value="Create">Create</SelectItem>
+            <SelectItem value="Replace">Replace</SelectItem>
+            <SelectItem value="Update">Update</SelectItem>
+            <SelectItem value="Delete">Delete</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -55,6 +55,9 @@ export function ShortcutsWidget({ sourceItem }: ShortcutsWidgetProps) {
               <Input
                 className="flex-1"
                 placeholder="Shortcut name"
+                name="shortcutPath"
+                value={shortcutsData?.shortcutPath || ""}
+                onChange={handleChange}
               />
               <button className="px-2 py-1 border rounded text-xs">...</button>
             </div>
@@ -62,14 +65,20 @@ export function ShortcutsWidget({ sourceItem }: ShortcutsWidgetProps) {
 
           <div className="space-y-2">
             <Label className="text-sm font-medium">Target type:</Label>
-            <Select name="targetType" onValueChange={handleChange}>
+            <Select
+              name="targetType"
+              value={shortcutsData?.targetType?.toString() || "0"}
+              onValueChange={(value) => {
+                handleChange({ target: { name: "targetType", value: parseInt(value) } });
+              }}
+            >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="FILESYSTEM" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="filesystem">FILESYSTEM</SelectItem>
-                <SelectItem value="url">URL</SelectItem>
-                <SelectItem value="shell">SHELL</SelectItem>
+                <SelectItem value="0">FILESYSTEM</SelectItem>
+                <SelectItem value="1">URL</SelectItem>
+                <SelectItem value="2">SHELL</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -78,27 +87,33 @@ export function ShortcutsWidget({ sourceItem }: ShortcutsWidgetProps) {
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label className="text-sm font-medium">Location:</Label>
-            <Select name="location" onValueChange={handleChange}>
+            <Select
+              name="location"
+              value={shortcutsData?.location?.toString() || "0"}
+              onValueChange={(value) => {
+                handleChange({ target: { name: "location", value: parseInt(value) } });
+              }}
+              >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="[Specify full path]" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="full-path">[Specify full path]</SelectItem>
-                <SelectItem value="desktop">Desktop</SelectItem>
-                <SelectItem value="start-menu">Start Menu</SelectItem>
-                <SelectItem value="programs">Programs</SelectItem>
-                <SelectItem value="startup">Startup</SelectItem>
-                <SelectItem value="favorites">Explorer Favorites</SelectItem>
-                <SelectItem value="links">Explorer Links</SelectItem>
-                <SelectItem value="send-to">Send To</SelectItem>
-                <SelectItem value="recent">Recent</SelectItem>
-                <SelectItem value="quick-launch">Quick Launch ToolBar</SelectItem>
-                <SelectItem value="network">My Network Places</SelectItem>
-                <SelectItem value="all-desktop">All Users Desktop</SelectItem>
-                <SelectItem value="all-start">All Users Start Menu</SelectItem>
-                <SelectItem value="all-programs">All Users Programs</SelectItem>
-                <SelectItem value="all-startup">All Users Startup</SelectItem>
-                <SelectItem value="all-favorites">All Users Explorer Favorites</SelectItem>
+                <SelectItem value="0">[Specify full path]</SelectItem>
+                <SelectItem value="1">Desktop</SelectItem>
+                <SelectItem value="2">Start Menu</SelectItem>
+                <SelectItem value="3">Programs</SelectItem>
+                <SelectItem value="4">Startup</SelectItem>
+                <SelectItem value="5">Explorer Favorites</SelectItem>
+                <SelectItem value="6">Explorer Links</SelectItem>
+                <SelectItem value="7">Send To</SelectItem>
+                <SelectItem value="8">Recent</SelectItem>
+                <SelectItem value="9">Quick Launch ToolBar</SelectItem>
+                <SelectItem value="10">My Network Places</SelectItem>
+                <SelectItem value="11">All Users Desktop</SelectItem>
+                <SelectItem value="12">All Users Start Menu</SelectItem>
+                <SelectItem value="13">All Users Programs</SelectItem>
+                <SelectItem value="14">All Users Startup</SelectItem>
+                <SelectItem value="15">All Users Explorer Favorites</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -191,14 +206,20 @@ export function ShortcutsWidget({ sourceItem }: ShortcutsWidgetProps) {
 
         <div className="space-y-2">
           <Label className="text-sm font-medium">Run:</Label>
-          <Select name="window" onValueChange={handleChange}>
+          <Select
+            name="window"
+            value={shortcutsData?.window?.toString() || "0"}
+            onValueChange={(value) => {
+              handleChange({ target: { name: "window", value: parseInt(value) } });
+            }}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Normal Window" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="normal">Normal Window</SelectItem>
-              <SelectItem value="minimized">Minimized</SelectItem>
-              <SelectItem value="maximized">Maximized</SelectItem>
+              <SelectItem value="0">Normal Window</SelectItem>
+              <SelectItem value="1">Minimized</SelectItem>
+              <SelectItem value="2">Maximized</SelectItem>
             </SelectContent>
           </Select>
         </div>
