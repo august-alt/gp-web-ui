@@ -6,25 +6,25 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { type IShareInterface } from './IShareInterface'
-import { convertIndex } from './Helpers'
+import { convertIndex, convertAction } from './Helpers'
 
 interface SharesyWidgetProps {
   sourceItem: IShareInterface
 }
 
 export function SharesWidget({sourceItem}:SharesyWidgetProps) {
-  const [action, setAction] = useState(convertIndex(sourceItem?.action || 0))
-  const [shareName, setShareName] = useState(sourceItem.name || "")
-  const [folderPath, setFolderPath] = useState(sourceItem.path || "")
-  const [comment, setComment] = useState(sourceItem.comment ||"")
-  const [modifiers, setModifiers] = useState({
-    updateAllRegular: sourceItem.allRegular || false,
-    updateAllHidden: sourceItem.allHidden ||  false,
-    updateAllAdmin: sourceItem.allAdminDrive || false
-  })
-  const [userLimit, setUserLimit] = useState(sourceItem.limitUsers || "noChange")
-  const [accessSetting, setAccessSetting] = useState(sourceItem.accessBasedEnumeration || "noChange")
-  const [userCount, setUserCount] = useState(sourceItem.userLimit || 10)
+  const [shareData, setShareData] = useState<IShareInterface>({
+    action: sourceItem?.action || 0,
+    name: sourceItem.name || "",
+    path: sourceItem.path || "",
+    comment: sourceItem.comment || "",
+    allRegular: sourceItem.allRegular || false,
+    allHidden: sourceItem.allHidden || false,
+    allAdminDrive: sourceItem.allAdminDrive || false,
+    limitUsers: sourceItem.limitUsers || "noChange",
+    userLimit: sourceItem.userLimit || 10,
+    accessBasedEnumeration: sourceItem.accessBasedEnumeration || "noChange",
+  });
 
   return (
     <div className="space-y-6 p-4">
@@ -33,7 +33,15 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
         <Label htmlFor="action" className="whitespace-nowrap">
           Action:
         </Label>
-        <Select value={action} onValueChange={setAction}>
+        <Select
+          value={convertIndex(shareData.action || 0)}
+          onValueChange={(value) => {
+            setShareData({
+              ...shareData,
+              action: convertAction(value),
+            });
+          }}
+        >
           <SelectTrigger id="action" className="w-[180px]">
             <SelectValue placeholder="Select action" />
           </SelectTrigger>
@@ -53,8 +61,8 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
           <div className="flex space-x-2">
             <Input
               id="share-name"
-              value={shareName}
-              onChange={(e) => setShareName(e.target.value)}
+              value={shareData.name}
+              onChange={(e) => setShareData({ ...shareData, name: e.target.value })}
               className="flex-1"
             />
             <Button variant="outline" disabled>...</Button>
@@ -66,8 +74,8 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
           <div className="flex space-x-2">
             <Input
               id="folder-path"
-              value={folderPath}
-              onChange={(e) => setFolderPath(e.target.value)}
+              value={shareData.path}
+              onChange={(e) => setShareData({ ...shareData, path: e.target.value })}
               className="flex-1"
             />
             <Button variant="outline">...</Button>
@@ -78,8 +86,8 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
           <Label htmlFor="comment" className="mb-1">Comment:</Label>
           <Input
             id="comment"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            value={shareData.comment}
+            onChange={(e) => setShareData({ ...shareData, comment: e.target.value })}
           />
         </div>
       </div>
@@ -94,8 +102,8 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
           <div className="flex items-center space-x-2">
             <Checkbox
               id="update-regular"
-              checked={modifiers.updateAllRegular}
-              onCheckedChange={(checked) => setModifiers({...modifiers, updateAllRegular: checked as boolean})}
+              checked={shareData.allRegular}
+              onCheckedChange={(checked) => setShareData({ ...shareData, allRegular: checked as boolean })}
             />
             <Label htmlFor="update-regular">Update all regular shares</Label>
           </div>
@@ -103,8 +111,8 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
           <div className="flex items-center space-x-2">
             <Checkbox
               id="update-hidden"
-              checked={modifiers.updateAllHidden}
-              onCheckedChange={(checked) => setModifiers({...modifiers, updateAllHidden: checked as boolean})}
+              checked={shareData.allHidden}
+              onCheckedChange={(checked) => setShareData({ ...shareData, allHidden: checked as boolean })}
             />
             <Label htmlFor="update-hidden" className="whitespace-pre-wrap">
               Update all hidden non-administrative shares
@@ -114,8 +122,8 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
           <div className="flex items-center space-x-2">
             <Checkbox
               id="update-admin"
-              checked={modifiers.updateAllAdmin}
-              onCheckedChange={(checked) => setModifiers({...modifiers, updateAllAdmin: checked as boolean})}
+              checked={shareData.allAdminDrive}
+              onCheckedChange={(checked) => setShareData({ ...shareData, allAdminDrive: checked as boolean })}
             />
             <Label htmlFor="update-admin" className="whitespace-pre-wrap">
               Update all administrative drive-letter shares
@@ -128,8 +136,8 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
       <div className="space-y-4 border-t pt-4">
         <Label className="font-medium">User limit:</Label>
         <RadioGroup
-          value={userLimit}
-          onValueChange={setUserLimit}
+          value={shareData.limitUsers}
+          onValueChange={(value) => setShareData({ ...shareData, limitUsers: value })}
           className="space-y-3"
         >
           <div className="flex items-center space-x-2">
@@ -151,8 +159,8 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
               type="number"
               min={0}
               max={65535}
-              value={userCount}
-              onChange={(e) => setUserCount(parseInt(e.target.value))}
+              value={shareData.userLimit}
+              onChange={(e) => setShareData({ ...shareData, userLimit: parseInt(e.target.value) })}
               className="w-20"
             />
           </div>
@@ -163,8 +171,8 @@ export function SharesWidget({sourceItem}:SharesyWidgetProps) {
       <div className="space-y-4 border-t pt-4">
         <Label className="font-medium">Access-based Enumeration:</Label>
         <RadioGroup
-          value={accessSetting}
-          onValueChange={setAccessSetting}
+          value={shareData.accessBasedEnumeration}
+          onValueChange={(value) => setShareData({ ...shareData, accessBasedEnumeration: value })}
           className="space-y-3"
         >
           <div className="flex items-center space-x-2">
