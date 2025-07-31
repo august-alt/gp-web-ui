@@ -31,8 +31,6 @@ export function VariablesWidget({sourceItem, updateData}:ShortcutsWidgetProps) {
   };
 
   const getRadioState = () => {
-    if (varData?.user)
-     return "user";
     if (varData?.system)
      return "system";
     return "user";
@@ -161,7 +159,7 @@ export function VariablesWidget({sourceItem, updateData}:ShortcutsWidgetProps) {
               (value: string) => {
                 const boolValue = value === "user";
 
-                handleChange({target: { name: "user", value: boolValue }})
+                // handleChange({target: { name: "user", value: boolValue }})
                 handleChange({target: { name: "system", value: !boolValue }})
               }
             }
