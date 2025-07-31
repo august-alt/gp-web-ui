@@ -17,6 +17,10 @@ interface DrivesWidgetProps {
 export const DrivesWidget = ({ sourceItem, updateData }: DrivesWidgetProps) => {
   const [driveData, setDriveData] = useState<IDriveMapInterface>({
     action: sourceItem?.action || 0,
+    path: sourceItem?.path || "",
+    label: sourceItem?.label || "",
+    persistent: sourceItem.persistent || false,
+    useLetter: sourceItem.useLetter || false,
     thisDrive: sourceItem?.thisDrive || 0,
     allDrives: sourceItem?.allDrives || 0,
     letter: sourceItem.letter || 'A:'
@@ -97,15 +101,36 @@ export const DrivesWidget = ({ sourceItem, updateData }: DrivesWidgetProps) => {
           <div  className="space-y-2">
             <div className="flex gap-4">
               <Label htmlFor="location">Location</Label>
-              <Input id="location" type="text" placeholder="Enter location" />
+              <Input
+                id="location"
+                type="text"
+                placeholder="Enter location"
+                name="path"
+                value={driveData?.path || ""}
+                onChange={handleChange}
+                disabled={driveData?.action === 3}
+              />
             </div>
             <div className="flex gap-4">
               <div className="flex items-center space-x-2">
                 <Label htmlFor="reconnect">Reconnect: </Label>
-                <Checkbox id="reconnect" />
+                <Checkbox
+                  id="reconnect"
+                  checked={driveData?.persistent || false}
+                  onCheckedChange={(value) => handleChange({ target: { name: "persistent", value: value } })}
+                  disabled={driveData?.action === 3}
+                />
               </div>
               <Label htmlFor="labelAs" className='whitespace-nowrap'>Label as:</Label>
-              <Input id="labelAs" type="text" placeholder="Enter label" />
+              <Input
+                id="labelAs"
+                type="text"
+                placeholder="Enter label"
+                name="label"
+                value={driveData?.label || ""}
+                onChange={handleChange}
+                disabled={driveData?.action === 3}
+              />
             </div>
           </div>
         </CardContent>
@@ -166,6 +191,7 @@ export const DrivesWidget = ({ sourceItem, updateData }: DrivesWidgetProps) => {
               name="thisDrive"
               onValueChange={(value) => handleChange({ target: { name: "thisDrive", value: convertDriveRadioIndex(value) } })}
               className="space-y-2"
+              disabled={driveData?.action === 3}
             >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="NOCHANGE" id="this-no-change" defaultChecked />
