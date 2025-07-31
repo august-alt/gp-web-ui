@@ -10,9 +10,10 @@ import { convertIndex, convertAction } from './Helpers'
 
 interface SharesyWidgetProps {
   sourceItem: IShareInterface
+  updateData: (item: IShareInterface) => void
 }
 
-export function SharesWidget({sourceItem}: SharesyWidgetProps) {
+export function SharesWidget({sourceItem, updateData}: SharesyWidgetProps) {
   const [shareData, setShareData] = useState<IShareInterface>({
     action: sourceItem?.action || 0,
     name: sourceItem.name || "",
@@ -28,7 +29,13 @@ export function SharesWidget({sourceItem}: SharesyWidgetProps) {
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
+
     setShareData({
+      ...shareData,
+      [name]: value
+    });
+
+    updateData({
       ...shareData,
       [name]: value
     });

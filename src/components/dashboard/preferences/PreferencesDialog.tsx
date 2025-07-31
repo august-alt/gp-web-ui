@@ -82,7 +82,7 @@ export function PreferencesDialog({ preferencesType, policyType, open = false, o
           )}
           {preferencesType === "Network Shares" && (
             <TabsContent value="shares" className="space-y-4">
-              <SharesWidget sourceItem={currentItem?.data}/>
+              <SharesWidget sourceItem={currentItem?.data} updateData={updateData}/>
             </TabsContent>
           )}
           {preferencesType === "Shortcuts" && (
