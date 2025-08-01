@@ -17,18 +17,28 @@ interface PreferencesDialogProps {
     preferencesType?: string
     policyType: number
     open?: boolean
+    createMode?: boolean
     onOpenChange?: (open: boolean) => void
     currentItem: any
 }
 
-export function PreferencesDialog({ preferencesType, policyType, open = false, onOpenChange = () => {}, currentItem }: PreferencesDialogProps) {
+export function PreferencesDialog({ preferencesType, policyType, open = false, createMode = false, onOpenChange = () => {}, currentItem }: PreferencesDialogProps) {
     const submitItem = () => {
         const dataProvider = new DataProvider();
         const currentPolicyName = adjustPolicyName(preferencesType || '');
 
-        dataProvider.update(`gpservice.basealt.ru.${currentPolicyName}.update`, policyType, currentItem)
-          .then(() => {})
-          .catch((error) => { console.log(error); });
+        if (createMode)
+        {
+          dataProvider.create(`gpservice.basealt.ru.${currentPolicyName}.create`, policyType, currentItem)
+            .then(() => {})
+            .catch((error) => { console.log(error); });
+        }
+        else
+        {
+          dataProvider.update(`gpservice.basealt.ru.${currentPolicyName}.update`, policyType, currentItem)
+            .then(() => {})
+            .catch((error) => { console.log(error); });
+        }
     };
 
     const updateData = (item: any) => {
