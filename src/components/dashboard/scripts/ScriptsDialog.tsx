@@ -6,11 +6,12 @@ import { ScriptsPowerShellWidget } from "./ScriptsPowerShellWidget"
 
 interface ScriptsDialogProps {
   open: boolean
+  policyName: string
   policyType: number
   onOpenChange: (open: boolean) => void
 }
 
-export function ScriptsDialog({ open, policyType, onOpenChange }: ScriptsDialogProps) {
+export function ScriptsDialog({ open, policyType, policyName, onOpenChange }: ScriptsDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[800px] flex flex-col">
@@ -27,7 +28,7 @@ export function ScriptsDialog({ open, policyType, onOpenChange }: ScriptsDialogP
           </div>
 
           <TabsContent value="scripts" className="mt-0 flex-1 overflow-y-auto">
-            <ScriptsWidget policyType={policyType} currentPolicyName="" scripts_={[]}/>
+            <ScriptsWidget policyType={policyType} currentPolicyName={`scripts.${policyName}`} scripts_={[]}/>
           </TabsContent>
 
           <TabsContent value="powershell" className="mt-0 flex-1 overflow-y-auto">

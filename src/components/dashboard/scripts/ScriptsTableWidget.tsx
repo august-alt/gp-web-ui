@@ -50,6 +50,7 @@ export function ScriptsTableWidget({ items = [] }: ScriptsTableWidgetProps) {
 
       <ScriptsDialog
         open={isDialogOpen}
+        policyName={selectedScript?.name.toLowerCase() || "logoff"}
         policyType={selectedScript?.policyType || 0}
         onOpenChange={(open) => {
           setIsDialogOpen(open);

@@ -26,11 +26,8 @@ export const ScriptsWidget = ({scripts_, currentPolicyName, policyType}: IScript
   const [selectedScriptIndex, setSelectedScriptIndex] = useState<number | null>(null)
   const [isEdit, setIsEdit] = useState(false)
 
-  const submitItem = (createMode: boolean) => {
+  const submitItem = (createMode: boolean, currentItem: IScript) => {
       const dataProvider = new DataProvider();
-      const currentItem = getSelectedScript();
-
-      if (currentItem === null) return
 
       if (createMode)
       {
@@ -58,7 +55,7 @@ export const ScriptsWidget = ({scripts_, currentPolicyName, policyType}: IScript
   const handleAddScript = (script: IScript) => {
     setScripts([...scripts, script])
 
-    submitItem(true);
+    submitItem(true, script);
   }
 
   const handleUpdateScript = (updatedScript: IScript) => {
@@ -67,7 +64,7 @@ export const ScriptsWidget = ({scripts_, currentPolicyName, policyType}: IScript
     newScripts[selectedScriptIndex] = updatedScript
     setScripts(newScripts)
 
-    submitItem(false);
+    submitItem(false, updatedScript);
   }
 
   const handleDeleteScript = () => {
