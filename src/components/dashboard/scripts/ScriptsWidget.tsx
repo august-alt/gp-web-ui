@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Label } from '@/components/ui/label'
 import { useState } from 'react'
-import AddScriptWidget from './AddScriptWidget'
+import { AddScriptDialog } from './AddScriptDialog'
 
 export const ScriptsWidget = () => {
   const [showAddScriptWidget, setShowAddScriptWidget] = useState(false)
@@ -37,11 +37,7 @@ export const ScriptsWidget = () => {
         </div>
       </div>
 
-      {showAddScriptWidget && (
-        <div className="mt-4">
-          <AddScriptWidget />
-        </div>
-      )}
+      <AddScriptDialog open={showAddScriptWidget} onOpenChange={setShowAddScriptWidget} />
 
       <Separator className="my-4" />
 
