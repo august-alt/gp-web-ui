@@ -28,7 +28,7 @@ export function ScriptsDialog({ open, policyType, policyName, onOpenChange }: Sc
           </div>
 
           <TabsContent value="scripts" className="mt-0 flex-1 overflow-y-auto">
-            <ScriptsWidget policyType={policyType} currentPolicyName={`scripts.${policyName}`} scripts_={[]}/>
+            <ScriptsWidget policyType={policyType} currentPolicyName={`scripts.${policyName}`} />
           </TabsContent>
 
           <TabsContent value="powershell" className="mt-0 flex-1 overflow-y-auto">

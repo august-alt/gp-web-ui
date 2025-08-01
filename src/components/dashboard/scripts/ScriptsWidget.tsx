@@ -13,18 +13,25 @@ import {
 } from '@/components/ui/table'
 import type { IScript } from './IScript'
 import { DataProvider } from "@/providers/DataProvider";
+import { useEffect } from "react"
 
 interface IScriptsWidgetProps {
-  scripts_: IScript[]
   currentPolicyName: string
   policyType: number
 }
 
-export const ScriptsWidget = ({scripts_, currentPolicyName, policyType}: IScriptsWidgetProps) => {
-  const [scripts, setScripts] = useState<IScript[]>(scripts_)
+export const ScriptsWidget = ({currentPolicyName, policyType}: IScriptsWidgetProps) => {
+  const [scripts, setScripts] = useState<IScript[]>([])
   const [showAddScriptWidget, setShowAddScriptWidget] = useState(false)
   const [selectedScriptIndex, setSelectedScriptIndex] = useState<number | null>(null)
   const [isEdit, setIsEdit] = useState(false)
+
+  useEffect(() => {
+    const dataProvider = new DataProvider();
+
+    dataProvider.getList(`gpservice.basealt.ru.${currentPolicyName}.getAll`, policyType)
+      .then((data: any) => { setScripts(data.items.result); console.log(data.items.result); });
+  }, [currentPolicyName, policyType]);
 
   const submitItem = (createMode: boolean, currentItem: IScript) => {
       const dataProvider = new DataProvider();
