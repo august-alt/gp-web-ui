@@ -12,18 +12,53 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import type { IScript } from './IScript'
+import { DataProvider } from "@/providers/DataProvider";
 
-export const ScriptsWidget = () => {
-  const [scripts, setScripts] = useState<IScript[]>([
-    { path: 'example-script.bat', arguments: 'arg1 arg2' },
-    { path: 'another-script.ps1', arguments: 'param1' }
-  ])
+interface IScriptsWidgetProps {
+  scripts_: IScript[]
+  currentPolicyName: string
+  policyType: number
+}
+
+export const ScriptsWidget = ({scripts_, currentPolicyName, policyType}: IScriptsWidgetProps) => {
+  const [scripts, setScripts] = useState<IScript[]>(scripts_)
   const [showAddScriptWidget, setShowAddScriptWidget] = useState(false)
   const [selectedScriptIndex, setSelectedScriptIndex] = useState<number | null>(null)
   const [isEdit, setIsEdit] = useState(false)
 
+  const submitItem = (createMode: boolean) => {
+      const dataProvider = new DataProvider();
+      const currentItem = getSelectedScript();
+
+      if (currentItem === null) return
+
+      if (createMode)
+      {
+        dataProvider.create(`gpservice.basealt.ru.${currentPolicyName}.create`, policyType, currentItem as any)
+          .then(() => {})
+          .catch((error) => { console.log(error); });
+      }
+      else
+      {
+        dataProvider.update(`gpservice.basealt.ru.${currentPolicyName}.update`, policyType, currentItem as any)
+          .then(() => {})
+          .catch((error) => { console.log(error); });
+      }
+  };
+
+  const deleteItem = () => {
+    const dataProvider = new DataProvider();
+    const currentItem = getSelectedScript();
+
+    dataProvider.delete(`gpservice.basealt.ru.${currentPolicyName}.delete`, policyType, currentItem as any)
+      .then(() => {})
+      .catch((error) => { console.log(error); });
+  };
+
   const handleAddScript = (script: IScript) => {
     setScripts([...scripts, script])
+
+    submitItem(true);
   }
 
   const handleUpdateScript = (updatedScript: IScript) => {
@@ -31,6 +66,8 @@ export const ScriptsWidget = () => {
     const newScripts = [...scripts]
     newScripts[selectedScriptIndex] = updatedScript
     setScripts(newScripts)
+
+    submitItem(false);
   }
 
   const handleDeleteScript = () => {
@@ -38,6 +75,8 @@ export const ScriptsWidget = () => {
     const newScripts = scripts.filter((_, index) => index !== selectedScriptIndex)
     setScripts(newScripts)
     setSelectedScriptIndex(null)
+
+    deleteItem();
   }
 
   const handleMoveUp = () => {

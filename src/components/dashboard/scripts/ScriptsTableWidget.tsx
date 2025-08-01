@@ -4,6 +4,7 @@ import { ScriptsDialog } from "./ScriptsDialog";
 
 interface ScriptItem {
   name: string;
+  policyType: number
 }
 
 interface ScriptsTableWidgetProps {
@@ -49,6 +50,7 @@ export function ScriptsTableWidget({ items = [] }: ScriptsTableWidgetProps) {
 
       <ScriptsDialog
         open={isDialogOpen}
+        policyType={selectedScript?.policyType || 0}
         onOpenChange={(open) => {
           setIsDialogOpen(open);
           if (!open) {

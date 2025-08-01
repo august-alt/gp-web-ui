@@ -4,14 +4,20 @@ import { Button } from "@/components/ui/button"
 import { ScriptsWidget } from "./ScriptsWidget"
 import { ScriptsPowerShellWidget } from "./ScriptsPowerShellWidget"
 
-export function ScriptsDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+interface ScriptsDialogProps {
+  open: boolean
+  policyType: number
+  onOpenChange: (open: boolean) => void
+}
+
+export function ScriptsDialog({ open, policyType, onOpenChange }: ScriptsDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[800px] flex flex-col">
         <DialogHeader>
           <DialogTitle>Scripts Configuration</DialogTitle>
         </DialogHeader>
-        
+
         <Tabs defaultValue="scripts" className="flex-1 overflow-hidden">
           <div className="px-4 border-b">
             <TabsList>
@@ -19,16 +25,16 @@ export function ScriptsDialog({ open, onOpenChange }: { open: boolean; onOpenCha
               <TabsTrigger value="powershell">PowerShell Scripts</TabsTrigger>
             </TabsList>
           </div>
-          
+
           <TabsContent value="scripts" className="mt-0 flex-1 overflow-y-auto">
-            <ScriptsWidget />
+            <ScriptsWidget policyType={policyType} currentPolicyName="" scripts_={[]}/>
           </TabsContent>
-          
+
           <TabsContent value="powershell" className="mt-0 flex-1 overflow-y-auto">
             <ScriptsPowerShellWidget />
           </TabsContent>
         </Tabs>
-        
+
         <DialogFooter className="px-4 py-3">
           <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
           <Button onClick={() => onOpenChange(false)}>Apply</Button>
