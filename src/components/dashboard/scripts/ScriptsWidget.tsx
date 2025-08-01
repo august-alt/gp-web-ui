@@ -36,15 +36,17 @@ export const ScriptsWidget = ({currentPolicyName, policyType}: IScriptsWidgetPro
   const submitItem = (createMode: boolean, currentItem: IScript) => {
       const dataProvider = new DataProvider();
 
+      const params = {id: (createMode ? scripts.length : selectedScriptIndex)?.toString() || "", data: currentItem};
+
       if (createMode)
       {
-        dataProvider.create(`gpservice.basealt.ru.${currentPolicyName}.create`, policyType, currentItem as any)
+        dataProvider.create(`gpservice.basealt.ru.${currentPolicyName}.create`, policyType, params)
           .then(() => {})
           .catch((error) => { console.log(error); });
       }
       else
       {
-        dataProvider.update(`gpservice.basealt.ru.${currentPolicyName}.update`, policyType, currentItem as any)
+        dataProvider.update(`gpservice.basealt.ru.${currentPolicyName}.update`, policyType, params)
           .then(() => {})
           .catch((error) => { console.log(error); });
       }
