@@ -2,8 +2,12 @@ import { TreeView } from '@/components/ui/tree-view'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Label } from '@/components/ui/label'
+import { useState } from 'react'
+import AddScriptWidget from './AddScriptWidget'
 
 export const ScriptsWidget = () => {
+  const [showAddScriptWidget, setShowAddScriptWidget] = useState(false)
+
   return (
     <div className="flex flex-col h-full">
       <div className="mb-4">
@@ -15,26 +19,32 @@ export const ScriptsWidget = () => {
 
       <div className="flex flex-1">
           <div className="flex-1 pr-2">
-            <TreeView 
+            <TreeView
               className="h-full"
               data={[]}
               initialSelectedItemId={undefined}
               onSelectChange={(item) => console.log('Selected:', item)}
             />
           </div>
-        
+
         <div className="w-24 flex flex-col gap-2">
           <Button>Up</Button>
           <Button>Down</Button>
           <div className="flex-1" />
-          <Button>Add</Button>
+          <Button onClick={() => setShowAddScriptWidget(true)}>Add</Button>
           <Button>Edit</Button>
           <Button>Remove</Button>
         </div>
       </div>
 
+      {showAddScriptWidget && (
+        <div className="mt-4">
+          <AddScriptWidget />
+        </div>
+      )}
+
       <Separator className="my-4" />
-      
+
       <div className="mb-4">
         <Label className="text-sm mb-2">
           To view the script files stored in this Group Policy Object, press the button below
