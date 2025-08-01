@@ -137,7 +137,7 @@ export function ShortcutsWidget({ sourceItem, updateData }: ShortcutsWidgetProps
               className="flex-1"
               placeholder="Path"
               name="targetPath"
-              value={shortcutsData.targetPath}
+              value={shortcutsData?.targetPath || ""}
               onChange={handleChange}
             />
             <button className="px-2 py-1 border rounded text-xs">...</button>
@@ -149,7 +149,7 @@ export function ShortcutsWidget({ sourceItem, updateData }: ShortcutsWidgetProps
           <Input
             placeholder="Arguments"
             name="arguments"
-            value={shortcutsData.arguments}
+            value={shortcutsData?.arguments || ""}
             onChange={handleChange}
           />
         </div>
@@ -165,7 +165,7 @@ export function ShortcutsWidget({ sourceItem, updateData }: ShortcutsWidgetProps
               className="flex-1"
               placeholder="Icon path"
               name="iconPath"
-              value={shortcutsData.iconPath}
+              value={shortcutsData?.iconPath || ""}
               onChange={handleChange}
             />
             <button className="px-2 py-1 border rounded text-xs">...</button>
@@ -177,7 +177,7 @@ export function ShortcutsWidget({ sourceItem, updateData }: ShortcutsWidgetProps
           <Input
             placeholder="Index"
             name="iconIndex"
-            value={shortcutsData.iconIndex}
+            value={shortcutsData?.iconIndex || 0}
             onChange={handleChange}
           />
         </div>
@@ -193,7 +193,7 @@ export function ShortcutsWidget({ sourceItem, updateData }: ShortcutsWidgetProps
               className="flex-1"
               placeholder="Start directory"
               name="startIn"
-              value={shortcutsData.startIn}
+              value={shortcutsData?.startIn || ""}
               onChange={handleChange}
             />
             <button className="px-2 py-1 border rounded text-xs">...</button>
@@ -205,7 +205,7 @@ export function ShortcutsWidget({ sourceItem, updateData }: ShortcutsWidgetProps
           <Input
             placeholder="Ctrl+..."
             name="shortcutKey"
-            value={shortcutsData.shortcutKey}
+            value={shortcutsData?.shortcutKey || ""}
             onChange={handleChange}
           />
         </div>
@@ -235,7 +235,7 @@ export function ShortcutsWidget({ sourceItem, updateData }: ShortcutsWidgetProps
           <Input
             placeholder="Comment"
             name="comment"
-            value={shortcutsData.comment}
+            value={shortcutsData?.comment || ""}
             onChange={handleChange}
           />
         </div>
