@@ -32,7 +32,7 @@ export const ScriptsWidget = () => {
           <Button>Down</Button>
           <div className="flex-1" />
           <Button onClick={() => setShowAddScriptWidget(true)}>Add</Button>
-          <Button>Edit</Button>
+          <Button onClick={() => setShowAddScriptWidget(true)}>Edit</Button>
           <Button>Remove</Button>
         </div>
       </div>
