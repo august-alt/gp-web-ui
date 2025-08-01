@@ -16,15 +16,15 @@ interface SharesyWidgetProps {
 export function SharesWidget({sourceItem, updateData}: SharesyWidgetProps) {
   const [shareData, setShareData] = useState<IShareInterface>({
     action: sourceItem?.action || 0,
-    name: sourceItem.name || "",
-    path: sourceItem.path || "",
-    comment: sourceItem.comment || "",
-    allRegular: sourceItem.allRegular || false,
-    allHidden: sourceItem.allHidden || false,
-    allAdminDrive: sourceItem.allAdminDrive || false,
-    limitUsers: sourceItem.limitUsers || "noChange",
-    userLimit: sourceItem.userLimit || 10,
-    accessBasedEnumeration: sourceItem.accessBasedEnumeration || "noChange",
+    name: sourceItem?.name || "",
+    path: sourceItem?.path || "",
+    comment: sourceItem?.comment || "",
+    allRegular: sourceItem?.allRegular || false,
+    allHidden: sourceItem?.allHidden || false,
+    allAdminDrive: sourceItem?.allAdminDrive || false,
+    limitUsers: sourceItem?.limitUsers || "noChange",
+    userLimit: sourceItem?.userLimit || 10,
+    accessBasedEnumeration: sourceItem?.accessBasedEnumeration || "noChange",
   });
 
   const handleChange = (event: any) => {
