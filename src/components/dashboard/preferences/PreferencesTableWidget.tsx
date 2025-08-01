@@ -41,6 +41,7 @@ export function PreferencesTableWidget({
   const [items, setItems] = useState<Item[]>([])
   const [currentItem, setCurrentItem] = useState<any>()
   const [isOpen, setIsOpen] = useState(false)
+  const [isNewMode, setNewMode] = useState(false)
 
   const getHeadersForPolicyName = (policyName: string): string[] => {
     switch(policyName.toLowerCase())
@@ -109,6 +110,7 @@ export function PreferencesTableWidget({
   }, [policyName, policyType]);
 
   const handleRowClick = (item: Item) => {
+    setNewMode(false);
     setCurrentItem(item);
     setIsOpen(true);
   };
@@ -130,6 +132,13 @@ export function PreferencesTableWidget({
   }
 
   const editItem = () => {
+    setNewMode(false);
+    setIsOpen(true);
+  }
+
+  const createItem = () => {
+    setCurrentItem({});
+    setNewMode(true);
     setIsOpen(true);
   }
 
@@ -183,7 +192,7 @@ export function PreferencesTableWidget({
               </Table>
             </ContextMenuTrigger>
             <ContextMenuContent className="w-52">
-              <ContextMenuItem inset>
+              <ContextMenuItem inset onClick={createItem}>
                 New
               </ContextMenuItem>
               <ContextMenuItem inset onClick={editItem}>
@@ -216,7 +225,7 @@ export function PreferencesTableWidget({
           </div>
         </div>
       </div>
-    <PreferencesDialog currentItem={currentItem} policyType={policyType} preferencesType={policyName} open={isOpen} onOpenChange={setIsOpen} />
+    <PreferencesDialog currentItem={currentItem} policyType={policyType} preferencesType={policyName} createMode={isNewMode} open={isOpen} onOpenChange={setIsOpen} />
     </div>
   )
 }
