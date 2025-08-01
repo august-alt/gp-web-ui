@@ -1,9 +1,16 @@
-import { TreeView } from '@/components/ui/tree-view'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Label } from '@/components/ui/label'
 import { useState } from 'react'
 import { AddScriptDialog } from './AddScriptDialog'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 
 export const ScriptsWidget = () => {
   const [showAddScriptWidget, setShowAddScriptWidget] = useState(false)
@@ -19,12 +26,22 @@ export const ScriptsWidget = () => {
 
       <div className="flex flex-1">
           <div className="flex-1 pr-2">
-            <TreeView
-              className="h-full"
-              data={[]}
-              initialSelectedItemId={undefined}
-              onSelectChange={(item) => console.log('Selected:', item)}
-            />
+            <Table className="h-full">
+              <TableHeader>
+                <TableRow>
+                  <TableHead rowSpan={2}>Script</TableHead>
+                  <TableHead rowSpan={2}>Arguments</TableHead>
+                </TableRow>
+                <TableRow>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Example Script</TableCell>
+                  <TableCell>Example Arguments</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
           </div>
 
         <div className="w-24 flex flex-col gap-2">
