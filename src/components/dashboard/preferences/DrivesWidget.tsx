@@ -19,11 +19,11 @@ export const DrivesWidget = ({ sourceItem, updateData }: DrivesWidgetProps) => {
     action: sourceItem?.action || 0,
     path: sourceItem?.path || "",
     label: sourceItem?.label || "",
-    persistent: sourceItem.persistent || false,
-    useLetter: sourceItem.useLetter || false,
+    persistent: sourceItem?.persistent || false,
+    useLetter: sourceItem?.useLetter || false,
     thisDrive: sourceItem?.thisDrive || 0,
     allDrives: sourceItem?.allDrives || 0,
-    letter: sourceItem.letter || 'A:'
+    letter: sourceItem?.letter || 'A:'
   });
 
   const handleChange = (event: any) => {
