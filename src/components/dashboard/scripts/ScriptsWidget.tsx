@@ -167,8 +167,8 @@ export const ScriptsWidget = ({currentPolicyName, policyType}: IScriptsWidgetPro
                       className={selectedScriptIndex === index ? 'bg-blue-100' : ''}
                       onClick={() => setSelectedScriptIndex(index)}
                     >
-                      <TableCell>{script.path || 'No path'}</TableCell>
-                      <TableCell>{script.arguments || 'No arguments'}</TableCell>
+                      <TableCell>{script?.script?.path || 'No path'}</TableCell>
+                      <TableCell>{script?.script?.arguments || 'No arguments'}</TableCell>
                     </TableRow>
                   ))
                 )}

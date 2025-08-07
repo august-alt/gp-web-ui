@@ -1,6 +1,11 @@
-interface IScript {
+interface IScriptData {
     path?: string
     arguments?: string
 }
 
-export type { IScript }
+interface IScript {
+    id?: string
+    script?: IScriptData
+}
+
+export type { IScript, IScriptData }
