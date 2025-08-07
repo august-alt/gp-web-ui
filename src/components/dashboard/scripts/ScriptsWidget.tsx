@@ -36,7 +36,7 @@ export const ScriptsWidget = ({currentPolicyName, policyType}: IScriptsWidgetPro
   const submitItem = (createMode: boolean, currentItem: IScript) => {
       const dataProvider = new DataProvider();
 
-      const params = {id: (createMode ? scripts.length : selectedScriptIndex)?.toString() || "", data: currentItem};
+      const params = {id: (createMode ? scripts.length : selectedScriptIndex)?.toString() || "", data: currentItem.script};
 
       if (createMode)
       {
@@ -56,7 +56,7 @@ export const ScriptsWidget = ({currentPolicyName, policyType}: IScriptsWidgetPro
     const dataProvider = new DataProvider();
     const currentItem = getSelectedScript();
 
-    dataProvider.delete(`gpservice.basealt.ru.${currentPolicyName}.delete`, policyType, currentItem as any)
+    dataProvider.delete(`gpservice.basealt.ru.${currentPolicyName}.delete_`, policyType, currentItem as any)
       .then(() => {})
       .catch((error) => { console.log(error); });
   };

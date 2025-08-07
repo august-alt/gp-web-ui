@@ -18,11 +18,11 @@ export function AddScriptDialog({
   script?: IScript | null;
   isEdit?: boolean;
 }) {
-  const [name, setName] = useState(script?.path || "")
-  const [argumentsValue, setArguments] = useState(script?.arguments || "")
+  const [name, setName] = useState(script?.script?.path || "")
+  const [argumentsValue, setArguments] = useState(script?.script?.arguments || "")
 
   const handleSubmit = () => {
-    onSave({ path: name, arguments: argumentsValue })
+    onSave({ id: script?.id, script: { path: name, arguments: argumentsValue } })
   }
 
   return (
